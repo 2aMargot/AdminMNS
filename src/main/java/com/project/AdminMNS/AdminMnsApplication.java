@@ -9,8 +9,7 @@ public class AdminMnsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdminMnsApplication.class, args);
-		System.out.println("Hello World ! ");
-	}
 
+	}
 
 }
