@@ -14,8 +14,9 @@ public class UserRole {
     protected Integer roleId;
 
     @Size(min = 2, max = 100, message = "nom minimum 2 caractères et maximum 100 caractères")
-    protected String roleName;
+    @Column(name = "role_name")
+    protected String name;
 
-    @Column(columnDefinition = "TEXT")
-    protected String roleDescription;
+    @Column(name = "role_description", columnDefinition = "TEXT")
+    protected String description;
 }

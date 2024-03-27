@@ -11,24 +11,29 @@ public class ModelUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer userId;
+    @Column(name = "user_id")
+    protected Integer id;
 
-    @Column(unique = true)
-    protected String userEmail;
+    @Column(name= "user_email",unique = true)
+    protected String email;
 
-    @Column(unique = true)
-    protected String userInternEmail;
+    @Column(name= "user_intern_email",unique = true)
+    protected String internEmail;
 
-    protected String userPassword;
+    @Column(name = "user_password")
+    protected String password;
 
     @Size(min = 2, max = 100, message = "nom minimum 2 caractères et maximum 100 caractères")
-    protected String userLastname;
+    @Column(name = "user_lastname")
+    protected String lastname;
 
     @Size(min = 2, max = 100, message = "nom minimum 2 caractères et maximum 100 caractères")
-    protected String userFirstname;
+    @Column(name = "user_firstname")
+    protected String firstname;
 
-    protected String userGender;
+    @Column(name = "user_gender")
+    protected String gender;
 
-    @Column(columnDefinition = "boolean default true")
-    protected boolean userIsEnable;
+    @Column(name= "user_is_enable",columnDefinition = "boolean default true")
+    protected boolean isEnable;
 }

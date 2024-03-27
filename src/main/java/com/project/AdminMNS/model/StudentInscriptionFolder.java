@@ -1,9 +1,6 @@
 package com.project.AdminMNS.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -16,7 +13,9 @@ public class StudentInscriptionFolder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer incriptionFolderId;
 
-    protected LocalDate inscriptionFolderCreationDate;
+    @Column(name = "inscription_folder_creation_date")
+    protected LocalDate creationDate;
 
-    protected LocalDate inscriptionFolderDeadline;
+    @Column(name = "inscription_folder_deadline")
+    protected LocalDate deadline;
 }

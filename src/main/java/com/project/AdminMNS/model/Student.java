@@ -1,9 +1,6 @@
 package com.project.AdminMNS.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -14,24 +11,34 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer studentId;
+    @Column(name = "student_id")
+    protected Integer id;
 
-    protected LocalDate studentBirthdate;
+    @Column(name = "student_birthdate")
+    protected LocalDate birthdate;
 
-    protected String studentBirthPlace;
+    @Column(name = "student_birthplace")
+    protected String birthplace;
 
-    protected String studentNationality;
+    @Column(name = "student_nationality")
+    protected String nationality;
 
-    protected String studentPostalCode;
+    @Column(name = "student_postalcode")
+    protected String postalCode;
 
-    protected String studentAdress;
+    @Column(name = "student_address")
+    protected String address;
 
-    protected String studentCity;
+    @Column(name = "student_city")
+    protected String city;
 
-    protected String studentPhoneNumber;
+    @Column(name = "student_phonenumber")
+    protected String phoneNumber;
 
+    @Column(name = "student_social_security_number", unique = true)
     protected String socialSecurityNumber;
 
+    @Column(name = "student_france_travail_number", unique = true)
     protected String franceTravailNumber;
 
 
