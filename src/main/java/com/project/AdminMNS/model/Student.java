@@ -2,12 +2,15 @@ package com.project.AdminMNS.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
-@Data
-public class Student {
+@Getter
+@Setter
+public class Student{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
