@@ -1,6 +1,7 @@
 package com.project.AdminMNS.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public class StudentInscriptionFolder {
     protected Integer incriptionFolderId;
 
     @Column(name = "inscription_folder_creation_date")
+    @NotBlank(message = "La date de creation du dossier d'inscription étudiant ne peut etre vide")
     protected LocalDate creationDate;
 
     @Column(name = "inscription_folder_deadline")

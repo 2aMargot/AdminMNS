@@ -370,13 +370,22 @@ VALUES
     ("Déclaration d'impôts", "Cras justo odio, dapibus ac facilisis in, egestas eget quam."),
     ("Extrait de naissance", "Morbi leo risus, porta ac consectetur ac, vestibulum at eros.");
 
-INSERT INTO `absence_cause` (`absence_cause_name`)
+INSERT INTO absence_cause (absence_cause_name)
 VALUES
-    ("PACS"),
-    ("Mariage"),
-    ("Arrêt Maladie"),
-    ("Décés"),
-    ("Naissance");
+    ("Accident du travail"),
+    ("Centre fermé"),
+    ("Congés de naissance ou d’adoption"),
+    ("Contrat de travail de courte durée"),
+    ("Décès conjoint, partenaire PACS, enfant"),
+    ("Décès père, mère, beau-père, belle-mère"),
+    ("Journée Défense et Citoyenneté"),
+    ("Maladie"),
+    ("Mariage d’un enfant"),
+    ("Mariage ou PACS du stagiaire"),
+    ("Maternité"),
+    ("Paternité"),
+    ("Paternité multiple"),
+    ("Enfant Handicapé");
 
 INSERT INTO `lateness_cause` (`lateness_cause_name`)
 VALUES

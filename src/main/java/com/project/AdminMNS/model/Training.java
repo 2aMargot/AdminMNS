@@ -1,6 +1,8 @@
 package com.project.AdminMNS.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,7 +17,9 @@ public class Training {
     @Column(name = "training_id")
     protected Integer id;
 
-    @Column(name = "training_name")
+    @Column(name = "training_name", length = 100)
+    @Size(max = 100, message = "Nom Training maximum 100 caractères")
+    @NotBlank(message = "Le nom de la formation ne peut etre vide")
     protected String name;
 
     @Column(name = "training_start")
