@@ -2,9 +2,9 @@ package com.project.AdminMNS.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,5 +23,16 @@ public class Training {
 
     @Column(name = "training_end")
     protected LocalDate end;
+
+    @OneToMany(mappedBy = "training")
+    protected List<StudentInscriptionFolder> studentInscriptionFolderList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "doctypextraining",
+            joinColumns = @JoinColumn (name = "training_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctype_id")
+    )
+    protected List<DocType> docTypeList = new ArrayList<>();
 
 }

@@ -25,4 +25,15 @@ public class Absence {
 
     @Column(name = "absence_justification")
     protected String justification;
+
+    @Column(name = "absence_validity")
+    protected Boolean validity;
+
+    @ManyToOne
+    @JoinColumn(name = "absence_cause_id")
+    protected AbsenceCause absenceCause;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_id")
+    protected Student studentAbsence;
 }

@@ -2,14 +2,12 @@ package com.project.AdminMNS.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Student{
 
     @Id
@@ -44,5 +42,13 @@ public class Student{
     @Column(name = "student_france_travail_number", unique = true)
     protected String franceTravailNumber;
 
+    @OneToMany(mappedBy = "studentAbsence")
+    protected List<Absence> absenceList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "studentLateness")
+    protected List<Lateness> latenessList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "student")
+    protected List<StudentInscriptionFolder> studentInscriptionFolderList = new ArrayList<>();
 
 }

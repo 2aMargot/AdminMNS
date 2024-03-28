@@ -31,4 +31,12 @@ public class Document {
 
     @Column(name = "document_refusal_date")
     protected LocalDate refusalDate;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_inscription_folder_id")
+    protected StudentInscriptionFolder studentInscriptionFolder;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "doctype_id")
+    protected DocType docType;
 }

@@ -3,6 +3,8 @@ package com.project.AdminMNS.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 public class DocType {
@@ -17,4 +19,7 @@ public class DocType {
 
     @Column(name = "doctype_description", columnDefinition = "TEXT")
     protected String description;
+
+    @OneToMany(mappedBy = "docType")
+    protected List<Document> documentList;
 }

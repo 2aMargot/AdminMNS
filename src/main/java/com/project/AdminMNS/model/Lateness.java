@@ -22,4 +22,12 @@ public class Lateness {
 
     @Column(name = "lateness_justification")
     protected String justification;
+
+    @ManyToOne
+    @JoinColumn (name = "lateness_cause_id")
+    protected LatenessCause latenessCause;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_id")
+    protected Student studentLateness;
 }
