@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "doc_type")
 public class DocType {
 
     @Id

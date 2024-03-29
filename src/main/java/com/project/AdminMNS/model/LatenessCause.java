@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "lateness_cause")
 public class LatenessCause {
 
     @Id

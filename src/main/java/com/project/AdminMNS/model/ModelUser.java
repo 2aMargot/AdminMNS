@@ -9,6 +9,8 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "model_user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ModelUser {
 
     @Id

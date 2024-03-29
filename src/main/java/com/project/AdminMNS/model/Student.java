@@ -10,12 +10,13 @@ import java.util.List;
 
 @Entity
 @Data
-public class Student{
+@PrimaryKeyJoinColumn(name = "user_id")
+public class Student extends ModelUser{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
-    protected Integer id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "student_id")
+//    protected Integer id;
 
     @Column(name = "student_birthdate")
     @NotBlank(message = "La date de naissance ne peut etre vide")

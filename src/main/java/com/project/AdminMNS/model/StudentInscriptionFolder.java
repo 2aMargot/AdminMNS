@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "student_inscription_folder")
 public class StudentInscriptionFolder {
 
     @Id

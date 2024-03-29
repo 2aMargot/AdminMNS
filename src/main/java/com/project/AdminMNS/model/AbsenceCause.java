@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "absence_cause")
 public class AbsenceCause {
 
     @Id

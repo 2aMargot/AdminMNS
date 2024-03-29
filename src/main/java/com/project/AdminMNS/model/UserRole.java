@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "user_role")
 public class UserRole {
 
     @Id
