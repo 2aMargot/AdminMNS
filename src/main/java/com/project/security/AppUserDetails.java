@@ -3,15 +3,15 @@ package com.project.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+
 public class AppUserDetails implements UserDetails {
 
-    protected User user;
+    protected ModelUser user;
 
-    public AppUserDetails(User user) {
+    public AppUserDetails(ModelUser user) {
         this.user = user;
     }
 

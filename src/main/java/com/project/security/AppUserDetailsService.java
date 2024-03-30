@@ -1,7 +1,5 @@
 package com.project.security;
 
-import edu.tceglarski.tp_spring.tpspring.dao.UserDAO;
-import edu.tceglarski.tp_spring.tpspring.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,12 +12,12 @@ import java.util.Optional;
 public class AppUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserDAO userDao;
+    ModelUserD userDao;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<User> optionalUtilisateur = userDao.findbyEmail(email);
+        Optional<ModelUser> optionalUtilisateur = userDao.findbyEmail(email);
 
         if(optionalUtilisateur.isPresent()) {
 
