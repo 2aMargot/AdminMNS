@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('ROLE_ABSENCEMANAGER')")
+@PreAuthorize("hasAnyRole('ROLE_ABSENCEMANAGER','ROLE_ADMIN','ROLE_DIRECTOR')")
 public @interface AbsenceManagerPermission {
 }
