@@ -3,10 +3,10 @@ package com.project.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-
 public class AppUserDetails implements UserDetails {
 
     protected User user;
@@ -17,16 +17,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        if(user.isAdmin()) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-        if(user.isEmployee) {
-            return List.of(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
-
-        }
-
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().getDesignation()));
     }
 
     @Override

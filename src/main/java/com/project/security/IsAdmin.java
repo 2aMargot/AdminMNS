@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_EMPLOYEE', 'ROLE_ADMIN')")
-public interface IsAdmin {
+public @interface IsAdmin {
 }

@@ -11,7 +11,7 @@ public class JwtUtils {
     public String generateToken(UserDetails userDetails) {
 
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256, "azerty")
+                .signWith(SignatureAlgorithm.HS256, "adeterminerethasher")
                 .setSubject(userDetails.getUsername())
                 .compact();
 
@@ -20,7 +20,7 @@ public class JwtUtils {
     public String getSubjectFromJwt(String jwt) {
 
         return Jwts.parser()
-                .setSigningKey("azerty")
+                .setSigningKey("adeterminerethasher")
                 .parseClaimsJws(jwt)
                 .getBody()
                 .getSubject();
