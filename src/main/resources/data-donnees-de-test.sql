@@ -10,7 +10,7 @@ VALUES
 
 INSERT INTO `model_user` (`role_id`,`user_firstname`,`user_lastname`,`user_email`,`user_intern_email`,`user_password`,`user_gender`)
 VALUES
-    (2,"Sophie","Martin","sophie.martin@example.com","sophie.martin_intern@example.com","MotDePasseSophie","F"),
+    (2,"Sophie","Martin","sophie.martin@example.com","sophie.martin_intern@example.com","$2y$10$Tl0tCangnuFM8N6kj5.6s.nWsnslyCHHGscsgWfXWPmoksO71R4Ha","F"),
     (2,"Hugo","Bernard","hugo.bernard@example.com","hugo.bernard_intern@example.com","MotDePasseHugo","M"),
     (2,"Manon","Durand","manon.durand@example.com","manon.durand_intern@example.com","MotDePasseManon","F"),
     (2,"Paul","Leroy","paul.leroy@example.com","paul.leroy_intern@example.com","MotDePassePaul","M"),

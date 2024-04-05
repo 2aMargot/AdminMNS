@@ -46,7 +46,7 @@ public class ModelUser {
     protected String firstname;
 
     @Column(name = "user_gender")
-    protected String gender="A";
+    protected String gender;
 
     @Column(name= "user_is_enable",columnDefinition = "boolean default true")
     protected boolean isEnable;

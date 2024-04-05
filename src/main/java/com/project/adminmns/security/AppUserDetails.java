@@ -21,6 +21,10 @@ public class AppUserDetails implements UserDetails {
         return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
     }
 
+    public ModelUser getUser(){
+        return user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
