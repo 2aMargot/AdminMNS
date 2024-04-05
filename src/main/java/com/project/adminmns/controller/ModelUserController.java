@@ -17,8 +17,6 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@AllArgsConstructor
-@NoArgsConstructor
 public class ModelUserController {
 
     ModelUserDao modelUserDao;

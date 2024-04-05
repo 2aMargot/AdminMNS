@@ -31,6 +31,6 @@ public class UserRole {
     @Column(name = "role_description", columnDefinition = "TEXT")
     protected String description;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     protected List<ModelUser> userList = new ArrayList<>();
 }
