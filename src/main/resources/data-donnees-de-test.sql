@@ -1,17 +1,17 @@
 INSERT INTO `user_role` (`role_name`,`role_description`)
 VALUES
-    ("Admin","tous les droits"),
-    ("Etudiant","Juste les droits étudiant"),
-    ("Gestionnaire d'incription","Validation document d'incription"),
-    ("Gestionnaire de formation","Peux tout voir"),
-    ("Accueil","Validation absence et retard");
+    ("ADMIN","tous les droits"),
+    ("STUDENT","Juste les droits étudiant"),
+    ("DIRECTOR","Juste les droits étudiant"),
+    ("INSCRIPTIONMANAGER","Validation document d'incription"),
+    ("ABSENCEMANAGER","Peux tout voir");
 
 
 
 INSERT INTO `model_user` (`role_id`,`user_firstname`,`user_lastname`,`user_email`,`user_intern_email`,`user_password`,`user_gender`)
 VALUES
     (2,"Sophie","Martin","sophie.martin@example.com","sophie.martin_intern@example.com","$2y$10$Tl0tCangnuFM8N6kj5.6s.nWsnslyCHHGscsgWfXWPmoksO71R4Ha","F"),
-    (2,"Hugo","Bernard","hugo.bernard@example.com","hugo.bernard_intern@example.com","MotDePasseHugo","M"),
+    (1,"Hugo","Bernard","hugo.bernard@example.com","hugo.bernard_intern@example.com","$2y$10$dkwWJ9fiauvdW0DDEEE6wOMfW.iVzpIs1nsNGWiQM7oN8Nsr7ZTm.","M"),
     (2,"Manon","Durand","manon.durand@example.com","manon.durand_intern@example.com","MotDePasseManon","F"),
     (2,"Paul","Leroy","paul.leroy@example.com","paul.leroy_intern@example.com","MotDePassePaul","M"),
     (2,"Camille","Lefevre","camille.lefevre@example.com","camille.lefevre_intern@example.com","MotDePasseCamille","F"),
@@ -349,7 +349,7 @@ VALUES
     (3,"Dai","Tanner","tristique.pellentesque@yahoo.com","et.commodo@protonmail.com","EAN46GMX0LI","A"),
     (3,"Herrod","Stuart","ipsum.nunc@google.com","eu.nibh@protonmail.edu","DFC22WAA1SY","A"),
     (1,"Cailin","Tyson","odio.vel@google.org","eu.turpis@aol.couk","YWC08MWD8DT","A"),
-    (1,"Maya","Howell","eu.enim@google.ca","magna.suspendisse.tristique@aol.net","KKX58EKY0RJ","M");
+    (1,"Maya","Howell","a@a.com","magna.suspendisse.tristique@aol.net","$2y$10$KoqFFw2cXjzbJ5Ev//oW0uNgpVicftxIc6i7uEX1fDsOXp8nl5SlS","M");
 
 
 

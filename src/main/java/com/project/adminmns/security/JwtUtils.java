@@ -11,7 +11,7 @@ public class JwtUtils {
     public String generateToken(UserDetails userDetails) {
 
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256,"azerty")
+                .signWith(SignatureAlgorithm.HS256,"adeterminerethasher")
 //                        TextCodec.BASE64.decode(""))    //hash du 'secret'
                 .setSubject(userDetails.getUsername())
 //                .setIssuedAt(Date.from(Instant.ofEpochSecond()))   //création du jwt

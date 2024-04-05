@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.management.relation.Role;
 
@@ -13,6 +15,8 @@ import javax.management.relation.Role;
 @Data
 @Table(name = "model_user")
 @Inheritance(strategy = InheritanceType.JOINED)
+@AllArgsConstructor
+@NoArgsConstructor
 public class ModelUser {
 
     @Id
@@ -24,11 +28,6 @@ public class ModelUser {
     @NotBlank(message = "L'email ne peut etre vide")
     @Email
     protected String email;
-
-    @Column(name= "user_intern_email",unique = true)
-    @NotBlank(message = "L'email interne ne peut etre vide")
-    @Email
-    protected String internEmail;
 
     @Column(name = "user_password", length = 100)
     @Size(max = 100, min=8, message = "Mot de passe minimum 8 caractères maximum 100 caractères")
@@ -49,7 +48,7 @@ public class ModelUser {
     protected String gender;
 
     @Column(name= "user_is_enable",columnDefinition = "boolean default true")
-    protected boolean isEnable;
+    protected boolean isEnable = true;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")

@@ -24,8 +24,9 @@ public class ModelUserController {
     ModelUserDao modelUserDao;
 
     @GetMapping("/users/{id}")
+    @AdminPermission
     @JsonView(ModelUserView.class)
-    //Trouver permission a mettre
+
     public ResponseEntity<ModelUser> get(@PathVariable int id) {
 
         Optional<ModelUser> modelUserOptional = modelUserDao.findById(id);
@@ -38,7 +39,7 @@ public class ModelUserController {
 
     }
 
-    @GetMapping("users/list")
+    @GetMapping("/users/list")
     @JsonView(ModelUserView.class)
     @AdminPermission
     public List<ModelUser> list() {
@@ -46,7 +47,7 @@ public class ModelUserController {
         return modelUserDao.findAll();
     }
 
-    @PostMapping("users")
+    @PostMapping("/users")
     @AdminPermission
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> add(@Valid @RequestBody ModelUser newUser) {
