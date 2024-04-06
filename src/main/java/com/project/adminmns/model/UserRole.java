@@ -1,5 +1,7 @@
 package com.project.adminmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.project.adminmns.view.ModelUserView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,9 +28,11 @@ public class UserRole {
     @Size(min = 2, max = 100, message = "nom minimum 2 caractères et maximum 100 caractères")
     @NotBlank(message = "Le nom du role ne peut etre vide")
     @Column(name = "role_name", length = 100)
+    @JsonView(ModelUserView.class)
     protected String name;
 
     @Column(name = "role_description", columnDefinition = "TEXT")
+    @JsonView(ModelUserView.class)
     protected String description;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)

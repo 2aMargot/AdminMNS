@@ -7,7 +7,6 @@ import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.view.ModelUserView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
+@AllArgsConstructor
 public class ModelUserController {
 
     ModelUserDao modelUserDao;
