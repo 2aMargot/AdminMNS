@@ -1,4 +1,4 @@
-package com.project.AdminMNS;
+package com.project.adminmns;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
