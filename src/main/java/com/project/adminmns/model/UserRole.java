@@ -35,6 +35,6 @@ public class UserRole {
     @JsonView(ModelUserView.class)
     protected String description;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    protected List<ModelUser> userList = new ArrayList<>();
+//    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+//    protected List<ModelUser> userList = new ArrayList<>();
 }

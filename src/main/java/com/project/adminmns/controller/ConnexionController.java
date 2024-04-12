@@ -35,16 +35,6 @@ public class ConnexionController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/inscription")
-    public ResponseEntity<Map<String, Object>> inscription (@RequestBody ModelUser user){
-
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        userDao.save(user);
-
-        return new ResponseEntity<>(Map.of("message", "utilisateur créé"), HttpStatus.CREATED);
-    }
-
     @PostMapping("/connexion")
     public ResponseEntity<Map<String, Object>> connexion (@RequestBody ModelUser user){
         try{
@@ -57,6 +47,19 @@ public class ConnexionController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+
+    @PostMapping("/inscription")
+    public ResponseEntity<Map<String, Object>> inscription (@RequestBody ModelUser user){
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        userDao.save(user);
+
+        return new ResponseEntity<>(Map.of("message", "utilisateur créé"), HttpStatus.CREATED);
+    }
+
+
 
     @GetMapping("/profil")
     @JsonView(ModelUserView.class)
