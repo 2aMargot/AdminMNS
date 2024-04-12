@@ -58,5 +58,5 @@ public class ModelUser {
     @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")
     @JsonView(ModelUserView.class)
-    protected UserRole role;
+    protected UserRole role = new UserRole(2, "STUDENT", "Juste les droits étudiant");
 }
