@@ -13,11 +13,6 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends ModelUser{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "student_id")
-//    protected Integer id;
-
     @Column(name = "student_birthdate")
     @NotBlank(message = "La date de naissance ne peut etre vide")
     protected LocalDate birthdate;
@@ -58,13 +53,13 @@ public class Student extends ModelUser{
     @Size(max = 30, message = "Le numéro de france travail ne peux pas etre supérieur à maximum 30 caractères")
     protected String franceTravailNumber;
 
-    @OneToMany(mappedBy = "studentAbsence")
+    @OneToMany(mappedBy = "studentAbsence", cascade = CascadeType.REMOVE)
     protected List<Absence> absenceList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "studentLateness")
+    @OneToMany(mappedBy = "studentLateness", cascade = CascadeType.REMOVE)
     protected List<Lateness> latenessList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     protected List<StudentInscriptionFolder> studentInscriptionFolderList = new ArrayList<>();
 
 }
