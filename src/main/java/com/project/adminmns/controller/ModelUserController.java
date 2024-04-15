@@ -1,8 +1,9 @@
 package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.dao.ModelUserDao;
+import com.project.adminmns.dao.*;
 import com.project.adminmns.model.ModelUser;
+import com.project.adminmns.model.Student;
 import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.view.ModelUserView;
 import jakarta.validation.Valid;
@@ -20,6 +21,10 @@ import java.util.Optional;
 public class ModelUserController {
 
     ModelUserDao modelUserDao;
+    StudentDao studentDao;
+    LatenessDao latenessDao;
+    AbsenceDao absenceDao;
+    StudentInscriptionFolderDao studentInscriptionFolderDao;
 
     @GetMapping("/users/{id}")
     @AdminPermission
@@ -80,8 +85,11 @@ public class ModelUserController {
     public ResponseEntity<ModelUser> delete(@PathVariable int id) {
 
         Optional<ModelUser> userOptional = modelUserDao.findById(id);
+        Optional<Student> studentOptional = studentDao.findById(id);
 
-        if (userOptional.isPresent()) {
+        if (userOptional.isPresent() && studentOptional.isPresent()) {
+
+            studentDao.deleteById(id);
             modelUserDao.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }

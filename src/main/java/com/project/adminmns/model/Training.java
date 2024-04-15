@@ -28,7 +28,7 @@ public class Training {
     @Column(name = "training_end")
     protected LocalDate end;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
     protected List<StudentInscriptionFolder> studentInscriptionFolderList;
 
     @ManyToMany
