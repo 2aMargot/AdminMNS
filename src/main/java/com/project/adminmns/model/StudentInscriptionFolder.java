@@ -31,6 +31,6 @@ public class StudentInscriptionFolder {
     @JoinColumn(name = "training_id")
     protected Training training;
 
-    @OneToMany(mappedBy = "studentInscriptionFolder")
+    @OneToMany(mappedBy = "studentInscriptionFolder", cascade = CascadeType.REMOVE)
     protected List<Document> documentList;
 }

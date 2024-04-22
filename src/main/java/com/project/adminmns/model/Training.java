@@ -1,5 +1,7 @@
 package com.project.adminmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.project.adminmns.view.TrainingView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Data
+
 public class Training {
 
     @Id
@@ -20,15 +23,19 @@ public class Training {
     @Column(name = "training_name", length = 100)
     @Size(max = 100, message = "Nom Training maximum 100 caractères")
     @NotBlank(message = "Le nom de la formation ne peut etre vide")
+    @JsonView(TrainingView.class)
     protected String name;
 
     @Column(name = "training_start")
+    @JsonView(TrainingView.class)
     protected LocalDate start;
 
     @Column(name = "training_end")
+    @JsonView(TrainingView.class)
     protected LocalDate end;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
+    @JsonView(TrainingView.class)
     protected List<StudentInscriptionFolder> studentInscriptionFolderList;
 
     @ManyToMany
