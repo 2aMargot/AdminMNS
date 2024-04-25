@@ -45,5 +45,4 @@ public class Training {
             inverseJoinColumns = @JoinColumn(name = "doctype_id")
     )
     protected List<DocType> docTypeList = new ArrayList<>();
-
 }

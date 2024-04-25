@@ -1,5 +1,7 @@
 package com.project.adminmns.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.project.adminmns.view.DocumentView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,30 +21,37 @@ public class Document {
     @Column(name = "document_name", length = 50)
     @NotBlank(message = "Le nom du document ne peut etre vide")
     @Size(max = 50, message = "Le nom du document ne peut etre supérieur à maximum 50 caractères")
+    @JsonView(DocumentView.class)
     protected String name;
 
     @Column(name = "document_link")
     @NotBlank(message = "Le lien du document ne peut etre vide")
+    @JsonView(DocumentView.class)
     protected String link;
 
     @Column(name = "document_validity")
+    @JsonView(DocumentView.class)
     protected Boolean validity;
 
     @Column(name = "document_deposite_date")
     @NotBlank(message = "La date de dépôt du document ne peut etre vide")
+    @JsonView(DocumentView.class)
     protected LocalDate depositeDate;
 
     @Column(name = "document_validation_date")
+    @JsonView(DocumentView.class)
     protected LocalDate validationDate;
 
     @Column(name = "document_refusal_date")
+    @JsonView(DocumentView.class)
     protected LocalDate refusalDate;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "student_inscription_folder_id")
     protected StudentInscriptionFolder studentInscriptionFolder;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "doctype_id")
     protected DocType docType;
+
 }
