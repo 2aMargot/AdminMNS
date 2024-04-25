@@ -24,7 +24,7 @@ public class DocTypeController {
     @GetMapping("/doctype/list")
     @JsonView(DocTypeView.class)
     @AdminPermission
-    public List<DocType> liste(){
+    public List<DocType> liste() {
         return docTypeDao.findAll();
     }
 
@@ -36,7 +36,7 @@ public class DocTypeController {
 
         Optional<DocType> docTypeOptional = this.docTypeDao.findById(id);
 
-        if(docTypeOptional.isEmpty()){
+        if (docTypeOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
@@ -69,30 +69,31 @@ public class DocTypeController {
     @PutMapping("/doctype/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
-    public ResponseEntity<DocType> update (@Valid @RequestBody DocType docType, @PathVariable int id) {
+    public ResponseEntity<DocType> update(@Valid @RequestBody DocType docType, @PathVariable int id) {
         docType.setId(id);
 
         Optional<DocType> docTypeOptional = docTypeDao.findById(docType.getId());
 
         //l'utilisateur tente de modifier un docType qui n'existe pas/plus
-        if(docTypeOptional.isEmpty()) {
+        if (docTypeOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         this.docTypeDao.save(docType);
         return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
     }
+
     @DeleteMapping("/doctype/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
-    public ResponseEntity<DocType> delete(@PathVariable int id){
+    public ResponseEntity<DocType> delete(@PathVariable int id) {
 
         Optional<DocType> docTypeOptional = this.docTypeDao.findById(id);
 
-        if(docTypeOptional.isEmpty()){
+        if (docTypeOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         docTypeDao.deleteById(id);
-        return new ResponseEntity<>(docTypeOptional.get(),HttpStatus.OK);
+        return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
     }
 }

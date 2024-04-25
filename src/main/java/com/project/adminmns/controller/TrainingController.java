@@ -24,7 +24,7 @@ public class TrainingController {
     @GetMapping("/training/list")
     @JsonView(TrainingView.class)
     @AdminPermission
-    public List<Training> liste(){
+    public List<Training> liste() {
         return trainingDao.findAll();
     }
 
@@ -36,7 +36,7 @@ public class TrainingController {
 
         Optional<Training> trainingOptional = this.trainingDao.findById(id);
 
-        if(trainingOptional.isEmpty()){
+        if (trainingOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
@@ -69,30 +69,31 @@ public class TrainingController {
     @PutMapping("/training/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
-    public ResponseEntity<Training> update (@Valid @RequestBody Training training, @PathVariable int id) {
+    public ResponseEntity<Training> update(@Valid @RequestBody Training training, @PathVariable int id) {
         training.setId(id);
 
         Optional<Training> trainingOptional = trainingDao.findById(training.getId());
 
         //l'utilisateur tente de modifier un training qui n'existe pas/plus
-        if(trainingOptional.isEmpty()) {
+        if (trainingOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         this.trainingDao.save(training);
         return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
     }
+
     @DeleteMapping("/training/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
-    public ResponseEntity<Training> delete(@PathVariable int id){
+    public ResponseEntity<Training> delete(@PathVariable int id) {
 
         Optional<Training> trainingOptional = this.trainingDao.findById(id);
 
-        if(trainingOptional.isEmpty()){
+        if (trainingOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         trainingDao.deleteById(id);
-        return new ResponseEntity<>(trainingOptional.get(),HttpStatus.OK);
+        return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
     }
 }

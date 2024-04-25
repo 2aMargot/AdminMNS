@@ -24,7 +24,7 @@ public class DocumentController {
     @GetMapping("/document/list")
     @JsonView(DocumentView.class)
     @AdminPermission
-    public List<Document> liste(){
+    public List<Document> liste() {
         return documentDao.findAll();
     }
 
@@ -36,7 +36,7 @@ public class DocumentController {
 
         Optional<Document> documentOptional = this.documentDao.findById(id);
 
-        if(documentOptional.isEmpty()){
+        if (documentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
@@ -69,30 +69,31 @@ public class DocumentController {
     @PutMapping("/document/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
-    public ResponseEntity<Document> update (@Valid @RequestBody Document document, @PathVariable int id) {
+    public ResponseEntity<Document> update(@Valid @RequestBody Document document, @PathVariable int id) {
         document.setId(id);
 
         Optional<Document> documentOptional = documentDao.findById(document.getId());
 
         //l'utilisateur tente de modifier un document qui n'existe pas/plus
-        if(documentOptional.isEmpty()) {
+        if (documentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         this.documentDao.save(document);
         return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
     }
+
     @DeleteMapping("/document/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
-    public ResponseEntity<Document> delete(@PathVariable int id){
+    public ResponseEntity<Document> delete(@PathVariable int id) {
 
         Optional<Document> documentOptional = this.documentDao.findById(id);
 
-        if(documentOptional.isEmpty()){
+        if (documentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         documentDao.deleteById(id);
-        return new ResponseEntity<>(documentOptional.get(),HttpStatus.OK);
+        return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
     }
 }

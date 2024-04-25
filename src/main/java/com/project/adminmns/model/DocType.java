@@ -34,6 +34,6 @@ public class DocType {
     @OneToMany(mappedBy = "docType", cascade = CascadeType.REMOVE)
     protected List<Document> documentList;
 
-    @ManyToMany(mappedBy = "docTypeList",  cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "docTypeList", cascade = CascadeType.REMOVE)
     protected List<Training> trainingList = new ArrayList<>();
 }
