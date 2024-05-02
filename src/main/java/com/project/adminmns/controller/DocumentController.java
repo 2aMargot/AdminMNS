@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.DocumentDao;
 import com.project.adminmns.model.Document;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.view.DocumentView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -46,8 +47,6 @@ public class DocumentController {
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> add(@Valid @RequestBody Document newDocument) {
-
-        //mise à jour
         if (newDocument.getId() != null) {
             Optional<Document> documentOptional = this.documentDao.findById(newDocument.getId());
 
