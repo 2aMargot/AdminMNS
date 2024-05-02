@@ -3,6 +3,8 @@ package com.project.adminmns.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,5 +34,6 @@ public class StudentInscriptionFolder {
     protected Training training;
 
     @OneToMany(mappedBy = "studentInscriptionFolder")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected List<Document> documentList;
 }

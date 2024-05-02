@@ -16,6 +16,34 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>development</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<secret_jwt>adeterminer</secret_jwt>
+				<db_host>localhost</db_host>
+				<db_port>3306</db_port>
+				<db_name>admin_mns</db_name>
+				<db_user>root</db_user>
+				<db_password>root</db_password>
+			</properties>
+		</profile>
+<!--		<profile>-->
+<!--			<id>production</id>-->
+<!--			<properties>-->
+<!--				<db_host>localhost</db_host>-->
+<!--				<db_port>3306</db_port>-->
+<!--				<db_name>spring_td_test_production</db_name>-->
+<!--				<db_user>root</db_user>-->
+<!--				<db_password>root</db_password>-->
+<!--			</properties>-->
+<!--		</profile>-->
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
@@ -74,6 +102,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

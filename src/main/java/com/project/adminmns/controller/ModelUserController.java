@@ -24,7 +24,6 @@ public class ModelUserController {
     @GetMapping("/users/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
-
     public ResponseEntity<ModelUser> get(@PathVariable int id) {
 
         Optional<ModelUser> modelUserOptional = modelUserDao.findById(id);
