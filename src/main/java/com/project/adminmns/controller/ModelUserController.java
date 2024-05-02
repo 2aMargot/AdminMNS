@@ -74,7 +74,7 @@ public class ModelUserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        modelUserDao.save(user);
+        this.modelUserDao.save(user);
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 
