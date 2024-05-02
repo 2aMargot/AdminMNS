@@ -92,7 +92,7 @@ public class DocumentController {
         if (documentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        documentDao.deleteById(id);
+        this.documentDao.deleteById(id);
         return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
     }
 }

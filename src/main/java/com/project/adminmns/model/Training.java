@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,8 +36,9 @@ public class Training {
     @JsonView(TrainingView.class)
     protected LocalDate end;
 
-    @OneToMany(mappedBy = "training", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "training")
     @JsonView(TrainingView.class)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected List<StudentInscriptionFolder> studentInscriptionFolderList;
 
     @ManyToMany

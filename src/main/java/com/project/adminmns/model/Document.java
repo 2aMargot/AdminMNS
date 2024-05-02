@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.view.DocumentView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -34,19 +37,21 @@ public class Document {
     protected Boolean validity;
 
     @Column(name = "document_deposite_date")
-    @NotBlank(message = "La date de dépôt du document ne peut etre vide")
+    @NotNull(message = "La date de dépôt du document ne peut etre vide")
     @JsonView(DocumentView.class)
     protected LocalDate depositeDate;
 
     @Column(name = "document_validation_date")
+    @NotNull(message = "La date de validation du document ne peut etre vide")
     @JsonView(DocumentView.class)
     protected LocalDate validationDate;
 
     @Column(name = "document_refusal_date")
+    @NotNull(message = "La date de refus du document ne peut etre vide")
     @JsonView(DocumentView.class)
     protected LocalDate refusalDate;
 
-    @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "student_inscription_folder_id")
     protected StudentInscriptionFolder studentInscriptionFolder;
 

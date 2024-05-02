@@ -23,7 +23,7 @@ public class DocTypeController {
     protected DocTypeDao docTypeDao;
 
     @GetMapping("/doctype/list")
-    @JsonView({DocTypeView.class, TrainingView.class})
+    @JsonView(DocTypeView.class)
     @AdminPermission
     public List<DocType> liste() {
         // affiche la liste de tous les doctypes

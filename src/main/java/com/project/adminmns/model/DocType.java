@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +33,11 @@ public class DocType {
     @JsonView(DocTypeView.class)
     protected String description;
 
-    @OneToMany(mappedBy = "docType", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "docType")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected List<Document> documentList;
 
-    @ManyToMany(mappedBy = "docTypeList", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "docTypeList")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected List<Training> trainingList = new ArrayList<>();
 }
