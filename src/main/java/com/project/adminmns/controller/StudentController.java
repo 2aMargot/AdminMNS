@@ -2,94 +2,91 @@ package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.*;
-import com.project.adminmns.model.ModelUser;
 import com.project.adminmns.model.Student;
 import com.project.adminmns.security.AdminPermission;
-import com.project.adminmns.view.ModelUserView;
+import com.project.adminmns.view.StudentView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-public class ModelUserController {
+public class StudentController {
 
-    ModelUserDao modelUserDao;
     StudentDao studentDao;
     LatenessDao latenessDao;
     AbsenceDao absenceDao;
     StudentInscriptionFolderDao studentInscriptionFolderDao;
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/student/{id}")
     @AdminPermission
-    @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> get(@PathVariable int id) {
+    @JsonView(StudentView.class)
+    public ResponseEntity<Student> get(@PathVariable int id) {
 
-        Optional<ModelUser> modelUserOptional = modelUserDao.findById(id);
+        Optional<Student> studentOptional = studentDao.findById(id);
 
-        if (modelUserOptional.isEmpty()) {
+        if (studentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(modelUserOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(studentOptional.get(), HttpStatus.OK);
 
     }
 
-    @GetMapping("/users/list")
-    @JsonView(ModelUserView.class)
+    @GetMapping("/student/list")
+    @JsonView(StudentView.class)
     @AdminPermission
-    public List<ModelUser> list() {
+    public List<Student> list() {
 
-        return modelUserDao.findAll();
+        return studentDao.findAll();
     }
 
-    @PostMapping("/users")
+    @PostMapping("/student")
     @AdminPermission
-    @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> add(@Valid @RequestBody ModelUser newUser) {
+    @JsonView(StudentView.class)
+    public ResponseEntity<Student> add(@Valid @RequestBody Student newUser) {
 
         if (newUser.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        modelUserDao.save(newUser);
+        studentDao.save(newUser);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/student/{id}")
     @AdminPermission
-    @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> modified(@Valid @RequestBody ModelUser user, @PathVariable int id) {
+    @JsonView(StudentView.class)
+    public ResponseEntity<Student> modified(@Valid @RequestBody Student user, @PathVariable int id) {
         user.setId(id);
 
-        Optional<ModelUser> userOptional = modelUserDao.findById(user.getId());
+        Optional<Student> userOptional = studentDao.findById(user.getId());
 
         if (userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        this.modelUserDao.save(user);
+        studentDao.save(user);
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/student/{id}")
     @AdminPermission
-    @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> delete(@PathVariable int id) {
+    @JsonView(StudentView.class)
+    public ResponseEntity<Student> delete(@PathVariable int id) {
 
-        Optional<ModelUser> userOptional = modelUserDao.findById(id);
+        Optional<Student> userOptional = studentDao.findById(id);
         Optional<Student> studentOptional = studentDao.findById(id);
 
         if (userOptional.isPresent() && studentOptional.isPresent()) {
 
             studentDao.deleteById(id);
-            modelUserDao.deleteById(id);
+            studentDao.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
 

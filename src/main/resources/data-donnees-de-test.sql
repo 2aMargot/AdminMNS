@@ -3,8 +3,8 @@ VALUES
     ("ADMIN","tous les droits"),
     ("STUDENT","Juste les droits étudiant"),
     ("DIRECTOR","Juste les droits étudiant"),
-    ("INSCRIPTIONMANAGER","Validation document d'incription"),
-    ("ABSENCEMANAGER","Peux tout voir");
+    ("VALIDATOR","Peux valider les documents déposés par les étudiants, que ce soit des documents d'inscription ou des documents d'asbence/retard");
+
 
 
 
@@ -12,8 +12,8 @@ INSERT INTO `model_user` (`role_id`,`user_firstname`,`user_lastname`,`user_email
 VALUES
     (2,"Sophie","Martin","sophie.martin@example.com","$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK","F"),
     (1,"Hugo","Bernard","hugo.bernard@example.com","$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK","M"),
-    (2,"Manon","Durand","manon.durand_intern@example.com","MotDePasseManon","F"),
-    (2,"Paul","Leroy","paul.leroy_intern@example.com","MotDePassePaul","M"),
+    (3,"Manon","Durand","manon.durand_intern@example.com","MotDePasseManon","F"),
+    (4,"Paul","Leroy","paul.leroy_intern@example.com","MotDePassePaul","M"),
     (2,"Camille","Lefevre","camille.lefevre_intern@example.com","MotDePasseCamille","F"),
     (2,"Gabriel","Dubois","gabriel.dubois_intern@example.com","MotDePasseGabriel","M"),
     (2,"Louise","Moreau","louise.moreau_intern@example.com","MotDePasseLouise","F"),
@@ -546,6 +546,12 @@ VALUES
     ("Accident"),
     ("Panne de réveil"),
     ("Rendez-vous");
+
+INSERT INTO  `employee` (`user_id`,`employee_department`)
+VALUES
+    (121,"Inscription"),
+    (122,"Formation"),
+    (123,"Direction");
 
 INSERT INTO `student` (`user_id`, `student_birthdate`,`student_birthplace`,`student_nationality`,`student_postalcode`,`student_address`,`student_city`,`student_phonenumber`,`student_social_security_number`,`student_france_travail_number`)
 VALUES
