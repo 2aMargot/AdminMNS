@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.view.StudentView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import java.time.LocalDate;
@@ -12,11 +13,11 @@ import java.util.List;
 
 @Entity
 @Data
-@PrimaryKeyJoinColumn(name = "user_id")
+//@PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends ModelUser{
 
     @Column(name = "student_birthdate")
-    @NotBlank(message = "La date de naissance ne peut etre vide")
+    @NotNull(message = "La date de naissance ne peux pas etre nulle")
     @JsonView(StudentView.class)
     protected LocalDate birthdate;
 

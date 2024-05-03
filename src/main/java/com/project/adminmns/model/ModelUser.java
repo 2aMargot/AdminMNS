@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 
 
 
-@Entity
+
 @Data
-@Table(name = "model_user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class ModelUser {
 
     @Id

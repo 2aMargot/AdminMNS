@@ -547,6 +547,12 @@ VALUES
     ("Panne de réveil"),
     ("Rendez-vous");
 
+INSERT INTO  `employee` (`user_id`,`employee_department`)
+VALUES
+    (121,"Inscription"),
+    (122,"Formation"),
+    (123,"Direction");
+
 INSERT INTO `student` (`user_id`, `student_birthdate`,`student_birthplace`,`student_nationality`,`student_postalcode`,`student_address`,`student_city`,`student_phonenumber`,`student_social_security_number`,`student_france_travail_number`)
 VALUES
     (1, DATE '2024-03-18',"Melilla","India","16485","Ap #326-5966 Ligula Ave","São Gonçalo","08 41 27 57 80","1 24 26 15 882 679 25","844 3446 U"),
