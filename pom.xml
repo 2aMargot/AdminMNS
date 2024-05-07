@@ -25,6 +25,7 @@
 			</activation>
 			<properties>
 				<secret_jwt>adeterminer</secret_jwt>
+				<dossier_upload>Nom de dossier upload a modifier</dossier_upload>
 				<db_host>localhost</db_host>
 				<db_port>3306</db_port>
 				<db_name>admin_mns</db_name>

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class StudentController {
     LatenessDao latenessDao;
     AbsenceDao absenceDao;
     StudentInscriptionFolderDao studentInscriptionFolderDao;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/student/{id}")
     @AdminPermission
@@ -55,6 +57,7 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         studentDao.save(newUser);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
@@ -83,12 +86,10 @@ public class StudentController {
     @JsonView(StudentView.class)
     public ResponseEntity<Student> delete(@PathVariable int id) {
 
-        Optional<Student> userOptional = studentDao.findById(id);
         Optional<Student> studentOptional = studentDao.findById(id);
 
-        if (userOptional.isPresent() && studentOptional.isPresent()) {
+        if (studentOptional.isPresent()) {
 
-            studentDao.deleteById(id);
             studentDao.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
