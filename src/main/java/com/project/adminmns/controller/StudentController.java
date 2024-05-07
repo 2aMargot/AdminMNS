@@ -71,6 +71,9 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+
+        user.setPassword(userOptional.get().getPassword());
+
         studentDao.save(user);
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
