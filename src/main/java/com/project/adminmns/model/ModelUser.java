@@ -59,8 +59,8 @@ public class ModelUser {
     @JsonView({ModelUserView.class, StudentView.class, EmployeeView.class})
     protected boolean isEnable = true;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
-    @JsonView({ModelUserView.class})
+    @JsonView({ModelUserView.class, EmployeeView.class})
     protected UserRole role = new UserRole(2, "STUDENT", "Juste les droits étudiant");
 }

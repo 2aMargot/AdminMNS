@@ -2,7 +2,9 @@ package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.EmployeeDao;
+import com.project.adminmns.dao.UserRoleDao;
 import com.project.adminmns.model.Employee;
+import com.project.adminmns.model.UserRole;
 import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.view.EmployeeView;
 import jakarta.validation.Valid;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class EmployeeController {
 
     EmployeeDao employeeDao;
+    UserRoleDao userRoleDao;
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/employee/{id}")
@@ -44,6 +48,14 @@ public class EmployeeController {
     public List<Employee> list() {
 
         return employeeDao.findAll();
+    }
+
+    @GetMapping("/role/list")
+    @JsonView(EmployeeView.class)
+    @AdminPermission
+    public List<UserRole> listRole(){
+
+        return userRoleDao.findAll();
     }
 
     @PostMapping("/employee")
