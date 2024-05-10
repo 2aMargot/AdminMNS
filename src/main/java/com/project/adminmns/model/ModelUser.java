@@ -59,4 +59,6 @@ public class ModelUser {
     @JoinColumn(name = "role_id")
     @JsonView(ModelUserView.class)
     protected UserRole role = new UserRole(2, "STUDENT", "Juste les droits étudiant");
+
+
 }

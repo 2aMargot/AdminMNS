@@ -36,7 +36,7 @@ public class ConnexionController {
     JwtUtils jwtUtils;
 
     @PostMapping("/connexion")
-    public ResponseEntity<Map<String, Object>> connexion (@RequestBody ModelUser user){
+    public ResponseEntity<Map<String, Object>> connexion(@RequestBody ModelUser user){
         try{
             UserDetails userDetails = (UserDetails) authenticationProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -48,7 +48,6 @@ public class ConnexionController {
         }
     }
 
-
     @PostMapping("/inscription")
     public ResponseEntity<Map<String, Object>> inscription (@RequestBody ModelUser user){
 
@@ -59,11 +58,9 @@ public class ConnexionController {
         return new ResponseEntity<>(Map.of("message", "utilisateur créé"), HttpStatus.CREATED);
     }
 
-
-
     @GetMapping("/profil")
     @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> profil (@AuthenticationPrincipal AppUserDetails userDetails){
+    public ResponseEntity<ModelUser> profil(@AuthenticationPrincipal AppUserDetails userDetails){
 
         return new ResponseEntity<>(userDetails.getUser(), HttpStatus.OK);
     }

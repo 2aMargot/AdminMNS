@@ -21,6 +21,21 @@ public class ModelUserController {
 
     ModelUserDao modelUserDao;
 
+    @GetMapping("/user-by-email/{email}")
+    @AdminPermission
+    @JsonView(ModelUserView.class)
+    public ResponseEntity<ModelUser> getByEmail(@PathVariable String email) {
+
+        Optional<ModelUser> modelUserOptional = modelUserDao.findByEmail(email);
+
+        if (modelUserOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(modelUserOptional.get(), HttpStatus.OK);
+
+    }
+
     @GetMapping("/users/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)

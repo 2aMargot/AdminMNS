@@ -24,8 +24,6 @@ public class AppUserDetailsService implements UserDetailsService {
 
             return new AppUserDetails(optionalUtilisateur.get());
         }
-
         throw new UsernameNotFoundException("Email introuvable");
     }
-
 }
