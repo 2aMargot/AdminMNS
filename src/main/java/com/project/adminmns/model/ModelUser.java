@@ -1,6 +1,7 @@
 package com.project.adminmns.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.project.adminmns.view.AbsenceView;
 import com.project.adminmns.view.ModelUserView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -28,7 +29,7 @@ public class ModelUser {
     @Column(name= "user_email",unique = true)
     @NotBlank(message = "L'email ne peut etre vide")
     @Email
-    @JsonView(ModelUserView.class)
+    @JsonView({ModelUserView.class, AbsenceView.class})
     protected String email;
 
     @Column(name = "user_password", length = 100)
@@ -39,13 +40,13 @@ public class ModelUser {
     @Size(min = 2, max = 100, message = "nom minimum 2 caractères et maximum 100 caractères")
     @Column(name = "user_lastname", length = 100)
     @NotBlank(message = "Le nom ne peut etre vide")
-    @JsonView(ModelUserView.class)
+    @JsonView({ModelUserView.class, AbsenceView.class})
     protected String lastname;
 
     @Size(min = 2, max = 100, message = "prénom minimum 2 caractères et maximum 100 caractères")
     @Column(name = "user_firstname")
     @NotBlank(message = "Le prénom ne peut etre vide")
-    @JsonView(ModelUserView.class)
+    @JsonView({ModelUserView.class, AbsenceView.class})
     protected String firstname;
 
     @Column(name = "user_gender")

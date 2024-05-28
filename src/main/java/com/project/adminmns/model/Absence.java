@@ -42,5 +42,6 @@ public class Absence {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
+    @JsonView(AbsenceView.class)
     protected Student studentAbsence;
 }
