@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.view.AbsenceView;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -38,10 +40,12 @@ public class Absence {
 
     @ManyToOne
     @JoinColumn(name = "absence_cause_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected AbsenceCause absenceCause;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
     @JsonView(AbsenceView.class)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected Student studentAbsence;
 }

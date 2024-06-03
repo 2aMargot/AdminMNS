@@ -89,7 +89,6 @@ public class StudentController {
         if (userOptional.isPresent() && studentOptional.isPresent()) {
 
             studentDao.deleteById(id);
-            studentDao.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
 

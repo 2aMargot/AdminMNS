@@ -65,7 +65,7 @@ public class Student extends ModelUser{
     @JsonView(StudentView.class)
     protected String franceTravailNumber;
 
-    @OneToMany(mappedBy = "studentAbsence", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "studentAbsence", cascade = CascadeType.ALL)
     @JsonView(StudentView.class)
     protected List<Absence> absenceList = new ArrayList<>();
 
