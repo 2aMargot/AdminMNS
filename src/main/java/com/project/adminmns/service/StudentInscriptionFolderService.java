@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Data
 @Service
 public class StudentInscriptionFolderService {
 
@@ -22,7 +21,7 @@ public class StudentInscriptionFolderService {
         return studentInscriptionFolderDao.findAll();
     }
 
-    public ResponseEntity<StudentInscriptionFolder> getFolder(@PathVariable int id) {
+    public ResponseEntity<StudentInscriptionFolder> getFolder(int id) {
 
         Optional<StudentInscriptionFolder> studentInscriptionFolderOptional = studentInscriptionFolderDao.findById(id);
 
@@ -33,7 +32,7 @@ public class StudentInscriptionFolderService {
         return new ResponseEntity<>(studentInscriptionFolderOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<StudentInscriptionFolder> addFolder(@Valid @RequestBody StudentInscriptionFolder newStudentInscriptionFolder) {
+    public ResponseEntity<StudentInscriptionFolder> addFolder(StudentInscriptionFolder newStudentInscriptionFolder) {
 
         if (newStudentInscriptionFolder.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -42,8 +41,7 @@ public class StudentInscriptionFolderService {
         return new ResponseEntity<>(newStudentInscriptionFolder, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<StudentInscriptionFolder> updateFolder(@Valid @RequestBody StudentInscriptionFolder studentInscriptionFolder, @PathVariable int id) {
-        studentInscriptionFolder.setId(id);
+    public ResponseEntity<StudentInscriptionFolder> updateFolder(StudentInscriptionFolder studentInscriptionFolder, int id) {
 
         Optional<StudentInscriptionFolder> studentInscriptionFolderOptional = studentInscriptionFolderDao.findById(studentInscriptionFolder.getId());
 
@@ -51,11 +49,12 @@ public class StudentInscriptionFolderService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        studentInscriptionFolder.setId(id);
         studentInscriptionFolderDao.save(studentInscriptionFolder);
         return new ResponseEntity<>(studentInscriptionFolderOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<StudentInscriptionFolder> deleteFolder(@PathVariable int id) {
+    public ResponseEntity<StudentInscriptionFolder> deleteFolder(int id) {
 
         Optional<StudentInscriptionFolder> studentInscriptionFolderOptional = studentInscriptionFolderDao.findById(id);
 

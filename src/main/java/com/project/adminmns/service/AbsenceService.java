@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-@Data
 @Service
 public class AbsenceService {
 
@@ -25,7 +24,7 @@ public class AbsenceService {
         return absenceDao.findAll();
     }
 
-    public ResponseEntity<Absence> getAbsence(@PathVariable int id) {
+    public ResponseEntity<Absence> getAbsence(int id) {
 
         Optional<Absence> absenceOptional = this.absenceDao.findById(id);
 
@@ -35,13 +34,11 @@ public class AbsenceService {
         return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Absence> addAbsence(@Valid @RequestBody Absence newAbsence) {
+    public ResponseEntity<Absence> addAbsence(Absence newAbsence) {
 
-        //mise à jour
         if (newAbsence.getId() != null) {
             Optional<Absence> absenceOptional = this.absenceDao.findById(newAbsence.getId());
 
-            // l'utilisateur tente de modifier un absence qui n'existe pas ou plus
             if (absenceOptional.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -56,21 +53,20 @@ public class AbsenceService {
         return new ResponseEntity<>(newAbsence, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Absence> updateAbsence(@Valid @RequestBody Absence absence, @PathVariable int id) {
-        absence.setId(id);
+    public ResponseEntity<Absence> updateAbsence(Absence absence, int id) {
 
         Optional<Absence> absenceOptional = absenceDao.findById(absence.getId());
 
-        //l'utilisateur tente de modifier un absence qui n'existe pas/plus
         if (absenceOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        absence.setId(id);
         this.absenceDao.save(absence);
         return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Absence> deleteAbsence(@PathVariable int id) {
+    public ResponseEntity<Absence> deleteAbsence(int id) {
 
         Optional<Absence> absenceOptional = this.absenceDao.findById(id);
 

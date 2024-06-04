@@ -13,43 +13,44 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("absence")
 @RestController
 @CrossOrigin
 @AllArgsConstructor
 public class AbsenceController {
 
     @Autowired
-    protected AbsenceService absenceService;
+    AbsenceService absenceService;
 
-    @GetMapping("/absence/list")
+    @GetMapping("/list")
     @JsonView(AbsenceView.class)
     @AdminPermission
     public List<Absence> list() {
         return absenceService.AbsenceList();
     }
 
-    @GetMapping("/absence/{id}")
+    @GetMapping("/{id}")
     @JsonView(AbsenceView.class)
     @AdminPermission
     public ResponseEntity<Absence> get(@PathVariable int id) {
         return absenceService.getAbsence(id);
     }
 
-    @PostMapping("/absence")
+    @PostMapping
     @JsonView(AbsenceView.class)
     @AdminPermission
     public ResponseEntity<Absence> add(@Valid @RequestBody Absence newAbsence) {
         return absenceService.addAbsence(newAbsence);
     }
 
-    @PutMapping("/absence/{id}")
+    @PutMapping("/{id}")
     @JsonView(AbsenceView.class)
     @AdminPermission
     public ResponseEntity<Absence> update(@Valid @RequestBody Absence absence, @PathVariable int id) {
         return absenceService.updateAbsence(absence, id);
     }
 
-    @DeleteMapping("/absence/{id}")
+    @DeleteMapping("/{id}")
     @JsonView(AbsenceView.class)
     @AdminPermission
     public ResponseEntity<Absence> delete(@PathVariable int id) {

@@ -15,14 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-@Data
+
 @Service
 public class ModelUserService {
 
     ModelUserDao modelUserDao;
     StudentDao studentDao;
 
-    public ResponseEntity<ModelUser> getUserByEmail(@PathVariable String email) {
+
+    public List<ModelUser> UserList() {
+
+        return modelUserDao.findAll();
+    }
+
+    public ResponseEntity<ModelUser> getUserByEmail(String email) {
 
         Optional<ModelUser> modelUserOptional = modelUserDao.findByEmail(email);
 
@@ -34,12 +40,7 @@ public class ModelUserService {
 
     }
 
-    public List<ModelUser> UserList() {
-
-        return modelUserDao.findAll();
-    }
-
-    public ResponseEntity<ModelUser> getUser(@PathVariable int id) {
+    public ResponseEntity<ModelUser> getUser(int id) {
 
         Optional<ModelUser> modelUserOptional = modelUserDao.findById(id);
 
@@ -50,7 +51,7 @@ public class ModelUserService {
         return new ResponseEntity<>(modelUserOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<ModelUser> addUser(@Valid @RequestBody ModelUser newUser) {
+    public ResponseEntity<ModelUser> addUser(ModelUser newUser) {
         if (newUser.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -59,8 +60,7 @@ public class ModelUserService {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<ModelUser> updateUser(@Valid @RequestBody ModelUser user, @PathVariable int id) {
-        user.setId(id);
+    public ResponseEntity<ModelUser> updateUser(ModelUser user, int id) {
 
         Optional<ModelUser> userOptional = modelUserDao.findById(user.getId());
 
@@ -68,11 +68,12 @@ public class ModelUserService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        user.setId(id);
         this.modelUserDao.save(user);
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<ModelUser> deleteUser(@PathVariable int id) {
+    public ResponseEntity<ModelUser> deleteUser(int id) {
 
         Optional<ModelUser> userOptional = modelUserDao.findById(id);
         Optional<Student> studentOptional = studentDao.findById(id);

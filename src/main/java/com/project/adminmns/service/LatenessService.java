@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-@Data
+
 @Service
 public class LatenessService {
 
@@ -26,7 +26,7 @@ public class LatenessService {
         return latenessDao.findAll();
     }
 
-    public ResponseEntity<Lateness> getLateness(@PathVariable int id) {
+    public ResponseEntity<Lateness> getLateness(int id) {
 
         Optional<Lateness> latenessOptional = this.latenessDao.findById(id);
 
@@ -36,13 +36,11 @@ public class LatenessService {
         return new ResponseEntity<>(latenessOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Lateness> addLateness(@Valid @RequestBody Lateness newLateness) {
+    public ResponseEntity<Lateness> addLateness(Lateness newLateness) {
 
-        //mise à jour
         if (newLateness.getId() != null) {
             Optional<Lateness> latenessOptional = this.latenessDao.findById(newLateness.getId());
 
-            // l'utilisateur tente de modifier un lateness qui n'existe pas ou plus
             if (latenessOptional.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -57,21 +55,20 @@ public class LatenessService {
         return new ResponseEntity<>(newLateness, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Lateness> updateLateness(@Valid @RequestBody Lateness lateness, @PathVariable int id) {
-        lateness.setId(id);
+    public ResponseEntity<Lateness> updateLateness(Lateness lateness, int id) {
 
         Optional<Lateness> latenessOptional = latenessDao.findById(lateness.getId());
 
-        //l'utilisateur tente de modifier un lateness qui n'existe pas/plus
         if (latenessOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        lateness.setId(id);
         this.latenessDao.save(lateness);
         return new ResponseEntity<>(latenessOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Lateness> deleteLateness(@PathVariable int id) {
+    public ResponseEntity<Lateness> deleteLateness(int id) {
 
         Optional<Lateness> latenessOptional = this.latenessDao.findById(id);
 
