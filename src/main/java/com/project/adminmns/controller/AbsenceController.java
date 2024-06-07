@@ -6,7 +6,6 @@ import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.service.AbsenceService;
 import com.project.adminmns.view.AbsenceView;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +15,14 @@ import java.util.List;
 @RequestMapping("absence")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class AbsenceController {
 
+    private final AbsenceService absenceService;
+
     @Autowired
-    AbsenceService absenceService;
+    public AbsenceController(AbsenceService absenceService) {
+        this.absenceService = absenceService;
+    }
 
     @GetMapping("/list")
     @JsonView(AbsenceView.class)

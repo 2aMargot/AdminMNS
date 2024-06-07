@@ -1,18 +1,14 @@
 package com.project.adminmns.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.ModelUserDao;
 import com.project.adminmns.model.ModelUser;
-import com.project.adminmns.security.AppUserDetails;
 import com.project.adminmns.security.JwtUtils;
-import com.project.adminmns.view.ModelUserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -23,17 +19,18 @@ import java.util.Map;
 @CrossOrigin
 public class ConnexionController {
 
-    @Autowired
-    ModelUserDao userDao;
+    private final ModelUserDao userDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationProvider authenticationProvider;
+    private final JwtUtils jwtUtils;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    AuthenticationProvider authenticationProvider;
-
-    @Autowired
-    JwtUtils jwtUtils;
+    public ConnexionController(ModelUserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, AuthenticationProvider authenticationProvider, JwtUtils jwtUtils){
+        this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.authenticationProvider = authenticationProvider;
+        this.jwtUtils = jwtUtils;
+    }
 
     @PostMapping("/connexion")
     public ResponseEntity<Map<String, Object>> connexion(@RequestBody ModelUser user){
@@ -56,12 +53,5 @@ public class ConnexionController {
         userDao.save(user);
 
         return new ResponseEntity<>(Map.of("message", "utilisateur créé"), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/profil")
-    @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> profil(@AuthenticationPrincipal AppUserDetails userDetails){
-
-        return new ResponseEntity<>(userDetails.getUser(), HttpStatus.OK);
     }
 }

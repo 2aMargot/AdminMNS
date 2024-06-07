@@ -9,6 +9,7 @@ import com.project.adminmns.service.ModelUserService;
 import com.project.adminmns.view.ModelUserView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/users")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ModelUserController {
 
-    ModelUserService modelUserService;
+    private final ModelUserService modelUserService;
+
+    @Autowired
+    public ModelUserController(ModelUserService modelUserService){
+        this.modelUserService = modelUserService;
+    }
 
     @GetMapping("/user-by-email/{email}")
     @AdminPermission
@@ -31,7 +38,7 @@ public class ModelUserController {
         return modelUserService.getUserByEmail(email);
     }
 
-    @GetMapping("/users/list")
+    @GetMapping("/list")
     @JsonView(ModelUserView.class)
     @AdminPermission
     public List<ModelUser> list() {
@@ -39,7 +46,7 @@ public class ModelUserController {
         return modelUserService.UserList();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> get(@PathVariable int id) {
@@ -47,7 +54,7 @@ public class ModelUserController {
         return modelUserService.getUser(id);
     }
 
-    @PostMapping("/users")
+    @PostMapping
     @AdminPermission
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> add(@Valid @RequestBody ModelUser newUser) {
@@ -55,7 +62,7 @@ public class ModelUserController {
         return modelUserService.addUser(newUser);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> update(@Valid @RequestBody ModelUser user, @PathVariable int id) {
@@ -63,7 +70,7 @@ public class ModelUserController {
         return modelUserService.updateUser(user, id);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> delete(@PathVariable int id) {

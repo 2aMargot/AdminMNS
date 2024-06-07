@@ -6,6 +6,7 @@ import com.project.adminmns.model.ModelUser;
 import com.project.adminmns.model.Student;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,12 @@ import java.util.Optional;
 @Service
 public class ModelUserService {
 
-    ModelUserDao modelUserDao;
-    StudentDao studentDao;
+    private final ModelUserDao modelUserDao;
+
+    @Autowired
+    public ModelUserService(ModelUserDao modelUserDao){
+        this.modelUserDao = modelUserDao;
+    }
 
 
     public List<ModelUser> UserList() {
@@ -76,11 +81,9 @@ public class ModelUserService {
     public ResponseEntity<ModelUser> deleteUser(int id) {
 
         Optional<ModelUser> userOptional = modelUserDao.findById(id);
-        Optional<Student> studentOptional = studentDao.findById(id);
 
-        if (userOptional.isPresent() && studentOptional.isPresent()) {
+        if (userOptional.isPresent()) {
 
-            studentDao.deleteById(id);
             modelUserDao.deleteById(id);
 
         }

@@ -17,43 +17,48 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/document")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
+//@AllArgsConstructor
 public class DocumentController {
 
-    @Autowired
-    DocumentService documentService;
+    private final DocumentService documentService;
 
-    @GetMapping("/document/list")
+    @Autowired
+    public DocumentController(DocumentService documentService){
+        this.documentService = documentService;
+    }
+
+    @GetMapping("/list")
     @JsonView(DocumentView.class)
     @AdminPermission
     public List<Document> list() {
         return documentService.documentList();
     }
 
-    @GetMapping("/document/{id}")
+    @GetMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> get(@PathVariable int id) {
         return documentService.getDocument(id);
     }
 
-    @PostMapping("/document")
+    @PostMapping
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> add(@Valid @RequestBody Document newDocument) {
         return documentService.addDocument(newDocument);
     }
 
-    @PutMapping("/document/{id}")
+    @PutMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> update(@Valid @RequestBody Document document, @PathVariable int id) {
         return documentService.updateDocument(document, id);
     }
 
-    @DeleteMapping("/document/{id}")
+    @DeleteMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> delete(@PathVariable int id) {

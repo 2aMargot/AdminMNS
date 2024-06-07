@@ -5,6 +5,7 @@ import com.project.adminmns.dao.DocTypeDao;
 import com.project.adminmns.model.DocType;
 import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.service.DocTypeService;
+import com.project.adminmns.service.DocumentService;
 import com.project.adminmns.view.DocTypeView;
 import com.project.adminmns.view.TrainingView;
 import jakarta.validation.Valid;
@@ -17,15 +18,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/doctype")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
+//@AllArgsConstructor
 public class DocTypeController {
 
-    @Autowired
-    DocTypeService docTypeService;
+    private final DocTypeService docTypeService;
 
-    @GetMapping("/doctype/list")
+    @Autowired
+    public DocTypeController(DocTypeService docTypeService){
+        this.docTypeService = docTypeService;
+    }
+
+    @GetMapping("/list")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public List<DocType> list() {
@@ -33,28 +39,28 @@ public class DocTypeController {
     }
 
 
-    @GetMapping("/doctype/{id}")
+    @GetMapping("/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> get(@PathVariable int id) {
         return docTypeService.getDocType(id);
     }
 
-    @PostMapping("/doctype")
+    @PostMapping
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> add(@Valid @RequestBody DocType newDocType) {
         return docTypeService.addDocType(newDocType);
     }
 
-    @PutMapping("/doctype/{id}")
+    @PutMapping("/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> update(@Valid @RequestBody DocType docType, @PathVariable int id) {
         return docTypeService.updateDocType(docType, id);
     }
 
-    @DeleteMapping("/doctype/{id}")
+    @DeleteMapping("/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> delete(@PathVariable int id) {

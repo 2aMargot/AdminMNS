@@ -16,15 +16,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/lateness")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
+//@AllArgsConstructor
 public class LatenessController {
 
-    @Autowired
-    LatenessService latenessService;
+    private final LatenessService latenessService;
 
-    @GetMapping("/lateness/list")
+    @Autowired
+    public LatenessController(LatenessService latenessService){
+        this.latenessService = latenessService;
+    }
+
+    @GetMapping("/list")
     @JsonView(LatenessView.class)
     @AdminPermission
     public List<Lateness> list() {
@@ -33,7 +38,7 @@ public class LatenessController {
     }
 
 
-    @GetMapping("/lateness/{id}")
+    @GetMapping("/{id}")
     @JsonView(LatenessView.class)
     @AdminPermission
     public ResponseEntity<Lateness> get(@PathVariable int id) {
@@ -41,14 +46,14 @@ public class LatenessController {
         return latenessService.getLateness(id);
     }
 
-    @PostMapping("/lateness")
+    @PostMapping
     @JsonView(LatenessView.class)
     @AdminPermission
     public ResponseEntity<Lateness> add(@Valid @RequestBody Lateness newLateness) {
 
         return latenessService.addLateness(newLateness);
     }
-    @PutMapping("/lateness/{id}")
+    @PutMapping("/{id}")
     @JsonView(LatenessView.class)
     @AdminPermission
     public ResponseEntity<Lateness> update(@Valid @RequestBody Lateness lateness, @PathVariable int id) {
@@ -56,7 +61,7 @@ public class LatenessController {
         return latenessService.updateLateness(lateness, id);
     }
 
-    @DeleteMapping("/lateness/{id}")
+    @DeleteMapping("/{id}")
     @JsonView(LatenessView.class)
     @AdminPermission
     public ResponseEntity<Lateness> delete(@PathVariable int id) {
