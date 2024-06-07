@@ -3,24 +3,25 @@ package com.project.adminmns.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.model.Absence;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.service.AbsenceService;
 import com.project.adminmns.view.AbsenceView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RequestMapping("absence")
 @RestController
-@CrossOrigin
+@CrossOrigin //à configurer sur une application/API déployée
 @AllArgsConstructor
 public class AbsenceController {
 
-    @Autowired
-    AbsenceService absenceService;
+    private final AbsenceService absenceService;
 
     @GetMapping("/list")
     @JsonView(AbsenceView.class)
@@ -55,5 +56,18 @@ public class AbsenceController {
     @AdminPermission
     public ResponseEntity<Absence> delete(@PathVariable int id) {
         return absenceService.deleteAbsence(id);
+    }
+
+    @ResponseBody
+    @StudentPermission
+    @PostMapping("/upload")
+    public ResponseEntity<byte[]> uploadFile(InputStream inputStream, String fileName) throws IOException {
+        return absenceService.uploadAbsence(inputStream, fileName);
+    }
+
+    @ResponseBody
+    @GetMapping("/download/{fileName}")
+    public byte[] getFile(@PathVariable String fileName) throws IOException {
+        return absenceService.getFileFromUploadFolder(fileName);
     }
 }

@@ -26,11 +26,11 @@ public class StudentInscriptionFolder {
 
     @Column(name = "inscription_folder_creation_date")
     @NotBlank(message = "La date de creation du dossier d'inscription étudiant ne peut etre vide")
-//    @JsonView(StudentInscriptionFolderView.class)
+    @JsonView(StudentInscriptionFolderView.class)
     protected LocalDate creationDate;
 
     @Column(name = "inscription_folder_deadline")
-//    @JsonView(StudentInscriptionFolderView.class)
+    @JsonView(StudentInscriptionFolderView.class)
     protected LocalDate deadline;
 
     @Column(name = "validity")
@@ -39,7 +39,7 @@ public class StudentInscriptionFolder {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
-//    @JsonView(StudentInscriptionFolderView.class)
+    @JsonView(StudentInscriptionFolderView.class)
     protected Student student;
 
     @ManyToOne(optional = false)

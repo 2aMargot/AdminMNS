@@ -8,6 +8,7 @@ import com.project.adminmns.service.StudentInscriptionFolderService;
 import com.project.adminmns.view.StudentInscriptionFolderView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StudentInscriptionFolderController {
 
+    @Autowired
     StudentInscriptionFolderService studentInscriptionFolderService;
 
     @GetMapping("/student-inscription-folder/list")
