@@ -19,7 +19,6 @@ import java.util.Optional;
 @RequestMapping("/lateness")
 @RestController
 @CrossOrigin
-//@AllArgsConstructor
 public class LatenessController {
 
     private final LatenessService latenessService;

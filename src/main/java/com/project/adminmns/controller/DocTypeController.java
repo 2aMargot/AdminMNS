@@ -21,7 +21,6 @@ import java.util.Optional;
 @RequestMapping("/doctype")
 @RestController
 @CrossOrigin
-//@AllArgsConstructor
 public class DocTypeController {
 
     private final DocTypeService docTypeService;

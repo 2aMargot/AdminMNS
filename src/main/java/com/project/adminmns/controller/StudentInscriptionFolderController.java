@@ -19,7 +19,6 @@ import java.util.Optional;
 @RequestMapping("/student-inscription-folder")
 @RestController
 @CrossOrigin
-//@AllArgsConstructor
 public class StudentInscriptionFolderController {
 
     private final StudentInscriptionFolderService studentInscriptionFolderService;

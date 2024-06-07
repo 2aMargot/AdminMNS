@@ -20,7 +20,6 @@ import java.util.Optional;
 @RequestMapping("/document")
 @RestController
 @CrossOrigin
-//@AllArgsConstructor
 public class DocumentController {
 
     private final DocumentService documentService;

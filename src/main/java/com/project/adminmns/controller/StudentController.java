@@ -19,7 +19,6 @@ import java.util.Optional;
 @RequestMapping("/student")
 @RestController
 @CrossOrigin
-//@AllArgsConstructor
 public class StudentController {
 
     private final StudentService studentService;

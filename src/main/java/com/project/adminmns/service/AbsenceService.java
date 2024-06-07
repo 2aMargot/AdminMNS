@@ -94,4 +94,11 @@ public class AbsenceService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    public ResponseEntity<Byte[]> getFile(String fileName) throws IOException {
+
+        this.fileUploadService.getFileFromUploadFolder(fileName);
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }
