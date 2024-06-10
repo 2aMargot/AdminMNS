@@ -16,7 +16,11 @@ import java.util.Optional;
 @Service
 public class TrainingService {
 
-    TrainingDao trainingDao;
+    private final TrainingDao trainingDao;
+
+    public TrainingService(TrainingDao trainingDao){
+        this.trainingDao = trainingDao;
+    }
 
     public List<Training> trainingList() {
         return trainingDao.findAll();

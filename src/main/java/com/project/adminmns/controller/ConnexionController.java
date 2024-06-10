@@ -23,17 +23,18 @@ import java.util.Map;
 @CrossOrigin
 public class ConnexionController {
 
-    @Autowired
-    ModelUserDao userDao;
+    private final ModelUserDao userDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationProvider authenticationProvider;
+    private final JwtUtils jwtUtils;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    AuthenticationProvider authenticationProvider;
-
-    @Autowired
-    JwtUtils jwtUtils;
+    public ConnexionController(ModelUserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, AuthenticationProvider authenticationProvider, JwtUtils jwtUtils){
+        this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.authenticationProvider = authenticationProvider;
+        this.jwtUtils = jwtUtils;
+    }
 
     @PostMapping("/connexion")
     public ResponseEntity<Map<String, Object>> connexion(@RequestBody ModelUser user){
@@ -57,5 +58,4 @@ public class ConnexionController {
 
         return new ResponseEntity<>(Map.of("message", "utilisateur créé"), HttpStatus.CREATED);
     }
-
 }
