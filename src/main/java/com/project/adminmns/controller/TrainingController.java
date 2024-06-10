@@ -8,6 +8,7 @@ import com.project.adminmns.service.TrainingService;
 import com.project.adminmns.view.TrainingView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +16,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/training")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class TrainingController {
 
-    TrainingService trainingService;
+    private final TrainingService trainingService;
 
-    @GetMapping("/training/list")
+    @Autowired
+    public TrainingController(TrainingService trainingService){
+        this.trainingService = trainingService;
+    }
+
+    @GetMapping("/list")
     @JsonView(TrainingView.class)
     @AdminPermission
     public List<Training> list() {
         return trainingService.trainingList();
     }
 
-    @GetMapping("/training/{id}")
+    @GetMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> get(@PathVariable int id) {
@@ -37,7 +43,7 @@ public class TrainingController {
         return trainingService.getTraining(id);
     }
 
-    @PostMapping("/training")
+    @PostMapping
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> add(@Valid @RequestBody Training newTraining) {
@@ -45,7 +51,7 @@ public class TrainingController {
         return trainingService.addTraining(newTraining);
     }
 
-    @PutMapping("/training/{id}")
+    @PutMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> update(@Valid @RequestBody Training training, @PathVariable int id) {
@@ -53,7 +59,7 @@ public class TrainingController {
         return trainingService.updateTraining(training, id);
     }
 
-    @DeleteMapping("/training/{id}")
+    @DeleteMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> delete(@PathVariable int id) {

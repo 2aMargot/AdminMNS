@@ -11,20 +11,18 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class FichierService {
+public class FileUploadService {
 
     @Value("${dossier.upload}")
     private String dossierUpload;
 
-    public ResponseEntity<byte[]> uploadToLocalFileSystem(InputStream inputStream, String fileName) throws IOException {
+    public ResponseEntity<byte[]> uploadToLocalFileSystem(InputStream inputStream, String originalFileName) throws IOException {
         Path storageDirectory = Paths.get(dossierUpload);
 
         if (!Files.exists(storageDirectory)) {
@@ -34,11 +32,6 @@ public class FichierService {
                 throw new IOException("Could not create storage directory", e);
             }
         }
-
-        if (fileName.contains("..") || fileName.contains("/") || fileName.contains("\\")) {
-            throw new IOException("Invalid file name");
-        }
-
         Set<String> allowedExtensions = new HashSet<>();
         allowedExtensions.add(".jpg");
         allowedExtensions.add(".jpeg");
@@ -47,7 +40,7 @@ public class FichierService {
 
         boolean validExtension = false;
         for (String extension : allowedExtensions) {
-            if (fileName.endsWith(extension)) {
+            if (originalFileName.endsWith(extension)) {
                 validExtension = true;
                 break;
             }
@@ -55,6 +48,22 @@ public class FichierService {
         if (!validExtension) {
             throw new IOException("File type not allowed");
         }
+
+
+        if (originalFileName.contains("..") || originalFileName.contains("/") || originalFileName.contains("\\") || originalFileName.contains(";")) {
+            throw new IOException("Invalid file name");
+        }
+
+        String fileExtension = "";
+        int i = originalFileName.lastIndexOf('.');
+        if (i > 0) {
+            fileExtension = originalFileName.substring(i);
+        }
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        String formattedDateTime = currentDateTime.format(dateTimeFormatter);
+        String fileName = "Absence_" + formattedDateTime + fileExtension;
 
         int maxFileSize = 5 * 1024 * 1024;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -79,29 +88,16 @@ public class FichierService {
             throw new IOException("Failed to upload file", e);
         }
 
-        // Save file as blob in the database
-        try (Connection connection = DatabaseUtils.getConnection()) {
-            String sql = "INSERT INTO file (file_name, file_data) VALUES (?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            Blob blob = connection.createBlob();
-            blob.setBytes(1, fileData);
-
-            statement.setString(1, fileName);
-            statement.setBlob(2, blob);
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("A new file was inserted successfully!");
-            }
-
-            blob.free();
-            statement.close();
-        } catch (SQLException e) {
-            throw new IOException("Failed to save file to database", e);
-        }
-
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    public byte[] getFileFromUploadFolder(String fileName) throws IOException {
+        Path fichierPath = Paths.get(dossierUpload, fileName);
+        if (Files.exists(fichierPath)) {
+            return Files.readAllBytes(fichierPath);
+        } else {
+            throw new IOException("Le fichier n'existe pas : " + fileName);
+        }
     }
 }
 

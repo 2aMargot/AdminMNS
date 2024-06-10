@@ -8,6 +8,7 @@ import com.project.adminmns.service.StudentService;
 import com.project.adminmns.view.StudentView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/student")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class StudentController {
 
-    StudentService studentService;
+    private final StudentService studentService;
 
-    @GetMapping("/student/list")
+    @Autowired
+    public StudentController(StudentService studentService){
+        this.studentService = studentService;
+    }
+
+    @GetMapping("/list")
     @JsonView(StudentView.class)
     @AdminPermission
     public List<Student> list() {
@@ -30,7 +36,7 @@ public class StudentController {
         return studentService.studentList();
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
     public ResponseEntity<Student> get(@PathVariable int id) {
@@ -38,7 +44,7 @@ public class StudentController {
         return studentService.getStudent(id);
     }
 
-    @PostMapping("/student")
+    @PostMapping
     @AdminPermission
     @JsonView(StudentView.class)
     public ResponseEntity<Student> add(@Valid @RequestBody Student newStudent) {
@@ -46,7 +52,7 @@ public class StudentController {
         return studentService.addStudent(newStudent);
     }
 
-    @PutMapping("/student/{id}")
+    @PutMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
     public ResponseEntity<Student> update(@Valid @RequestBody Student student, @PathVariable int id) {
@@ -54,7 +60,7 @@ public class StudentController {
         return studentService.updateStudent(student, id);
     }
 
-    @DeleteMapping("/student/{id}")
+    @DeleteMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
     public ResponseEntity<Student> delete(@PathVariable int id) {

@@ -11,14 +11,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AbsenceService {
 
+    private final AbsenceDao absenceDao;
+    private final FileUploadService fileUploadService;
+
+
     @Autowired
-    protected AbsenceDao absenceDao;
+    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService){
+        this.absenceDao = absenceDao;
+        this.fileUploadService = fileUploadService;
+    }
+
 
     public List<Absence> AbsenceList() {
         return absenceDao.findAll();
@@ -75,6 +85,20 @@ public class AbsenceService {
         }
         absenceDao.deleteById(id);
         return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<byte[]> uploadAbsence(InputStream inputStream, String fileName) throws IOException {
+
+        this.fileUploadService.uploadToLocalFileSystem(inputStream, fileName);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<Byte[]> getFile(String fileName) throws IOException {
+
+        this.fileUploadService.getFileFromUploadFolder(fileName);
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }

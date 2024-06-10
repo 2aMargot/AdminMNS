@@ -2,6 +2,7 @@ package com.project.adminmns.service;
 
 import com.project.adminmns.dao.DocumentDao;
 import com.project.adminmns.model.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,11 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class DocumentService {
 
-    DocumentDao documentDao;
+    private final DocumentDao documentDao;
+
+    @Autowired
+    public DocumentService(DocumentDao documentDao){
+        this.documentDao = documentDao;
+    }
 
     public List<Document> documentList() {
         return documentDao.findAll();

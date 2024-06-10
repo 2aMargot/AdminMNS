@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class LatenessService {
 
-    @Autowired
     LatenessDao latenessDao;
+
+    @Autowired
+    public LatenessService(LatenessDao latenessDao){
+        this.latenessDao = latenessDao;
+    }
 
     public List<Lateness> latenessList() {
 

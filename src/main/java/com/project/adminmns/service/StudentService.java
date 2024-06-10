@@ -2,6 +2,7 @@ package com.project.adminmns.service;
 
 import com.project.adminmns.dao.StudentDao;
 import com.project.adminmns.model.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,12 @@ import java.util.Optional;
 @Service
 public class StudentService {
 
-    StudentDao studentDao;
+    private final StudentDao studentDao;
+
+    @Autowired
+    public StudentService(StudentDao studentDao){
+        this.studentDao = studentDao;
+    }
 
     public List<Student> studentList() {
 
