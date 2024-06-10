@@ -5,6 +5,7 @@ import com.project.adminmns.dao.*;
 import com.project.adminmns.model.ModelUser;
 import com.project.adminmns.model.Student;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.service.ModelUserService;
 import com.project.adminmns.view.ModelUserView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,25 +21,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ModelUserController {
 
-    ModelUserDao modelUserDao;
-    StudentDao studentDao;
-    LatenessDao latenessDao;
-    AbsenceDao absenceDao;
-    StudentInscriptionFolderDao studentInscriptionFolderDao;
+    ModelUserService modelUserService;
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/user-by-email/{email}")
     @AdminPermission
     @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> get(@PathVariable int id) {
+    public ResponseEntity<ModelUser> getByEmail(@PathVariable String email) {
 
-        Optional<ModelUser> modelUserOptional = modelUserDao.findById(id);
-
-        if (modelUserOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(modelUserOptional.get(), HttpStatus.OK);
-
+        return modelUserService.getUserByEmail(email);
     }
 
     @GetMapping("/users/list")
@@ -46,7 +36,15 @@ public class ModelUserController {
     @AdminPermission
     public List<ModelUser> list() {
 
-        return modelUserDao.findAll();
+        return modelUserService.UserList();
+    }
+
+    @GetMapping("/users/{id}")
+    @AdminPermission
+    @JsonView(ModelUserView.class)
+    public ResponseEntity<ModelUser> get(@PathVariable int id) {
+
+        return modelUserService.getUser(id);
     }
 
     @PostMapping("/users")
@@ -54,28 +52,15 @@ public class ModelUserController {
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> add(@Valid @RequestBody ModelUser newUser) {
 
-        if (newUser.getId() != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        modelUserDao.save(newUser);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        return modelUserService.addUser(newUser);
     }
 
     @PutMapping("/users/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
-    public ResponseEntity<ModelUser> modified(@Valid @RequestBody ModelUser user, @PathVariable int id) {
-        user.setId(id);
+    public ResponseEntity<ModelUser> update(@Valid @RequestBody ModelUser user, @PathVariable int id) {
 
-        Optional<ModelUser> userOptional = modelUserDao.findById(user.getId());
-
-        if (userOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        this.modelUserDao.save(user);
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        return modelUserService.updateUser(user, id);
     }
 
     @DeleteMapping("/users/{id}")
@@ -83,18 +68,6 @@ public class ModelUserController {
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> delete(@PathVariable int id) {
 
-        Optional<ModelUser> userOptional = modelUserDao.findById(id);
-        Optional<Student> studentOptional = studentDao.findById(id);
-
-        if (userOptional.isPresent() && studentOptional.isPresent()) {
-
-            studentDao.deleteById(id);
-            modelUserDao.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return modelUserService.deleteUser(id);
     }
-
-
 }

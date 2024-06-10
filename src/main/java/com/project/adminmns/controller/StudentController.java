@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.*;
 import com.project.adminmns.model.Student;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.service.StudentService;
 import com.project.adminmns.view.StudentView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -19,83 +20,44 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StudentController {
 
-    StudentDao studentDao;
-    LatenessDao latenessDao;
-    AbsenceDao absenceDao;
-    StudentInscriptionFolderDao studentInscriptionFolderDao;
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @GetMapping("/student/{id}")
-    @AdminPermission
-    @JsonView(StudentView.class)
-    public ResponseEntity<Student> get(@PathVariable int id) {
-
-        Optional<Student> studentOptional = studentDao.findById(id);
-
-        if (studentOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(studentOptional.get(), HttpStatus.OK);
-
-    }
+    StudentService studentService;
 
     @GetMapping("/student/list")
     @JsonView(StudentView.class)
     @AdminPermission
     public List<Student> list() {
 
-        return studentDao.findAll();
+        return studentService.studentList();
+    }
+
+    @GetMapping("/student/{id}")
+    @AdminPermission
+    @JsonView(StudentView.class)
+    public ResponseEntity<Student> get(@PathVariable int id) {
+
+        return studentService.getStudent(id);
     }
 
     @PostMapping("/student")
     @AdminPermission
     @JsonView(StudentView.class)
-    public ResponseEntity<Student> add(@Valid @RequestBody Student newUser) {
+    public ResponseEntity<Student> add(@Valid @RequestBody Student newStudent) {
 
-        if (newUser.getId() != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-        studentDao.save(newUser);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        return studentService.addStudent(newStudent);
     }
 
     @PutMapping("/student/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
-    public ResponseEntity<Student> modified(@Valid @RequestBody Student user, @PathVariable int id) {
-        user.setId(id);
+    public ResponseEntity<Student> update(@Valid @RequestBody Student student, @PathVariable int id) {
 
-        Optional<Student> userOptional = studentDao.findById(user.getId());
-
-        if (userOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-
-        user.setPassword(userOptional.get().getPassword());
-
-        studentDao.save(user);
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        return studentService.updateStudent(student, id);
     }
 
     @DeleteMapping("/student/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
     public ResponseEntity<Student> delete(@PathVariable int id) {
-
-        Optional<Student> studentOptional = studentDao.findById(id);
-
-        if (studentOptional.isPresent()) {
-
-            studentDao.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return studentService.deleteStudent(id);
     }
-
-
 }
