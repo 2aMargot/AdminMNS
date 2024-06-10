@@ -64,16 +64,16 @@ public class AbsenceController {
         return absenceService.deleteAbsence(id);
     }
 
-    @ResponseBody
-    @StudentPermission
-    @PostMapping("/upload")
-    public ResponseEntity<byte[]> uploadFile(InputStream inputStream, String fileName) throws IOException {
-        return absenceService.uploadAbsence(inputStream, fileName);
-    }
-
-    @ResponseBody
-    @GetMapping("/download/{fileName}")
-    public byte[] getFile(@PathVariable String fileName) throws IOException {
-        return absenceService.getFileFromUploadFolder(fileName);
-    }
+//    @ResponseBody
+//    @StudentPermission
+//    @PostMapping("/upload")
+//    public ResponseEntity<byte[]> uploadFile(InputStream inputStream, String fileName) throws IOException {
+//        return absenceService.uploadAbsence(inputStream, fileName);
+//    }
+//
+//    @ResponseBody
+//    @GetMapping("/download/{fileName}")
+//    public byte[] getFile(@PathVariable String fileName) throws IOException {
+//        return absenceService.getFileFromUploadFolder(fileName);
+//    }
 }

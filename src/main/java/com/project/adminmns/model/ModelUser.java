@@ -23,12 +23,13 @@ public class ModelUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @JsonView({ModelUserView.class, AbsenceView.class, StudentInscriptionFolderView.class, StudentView.class, LatenessView.class})
     protected Integer id;
 
     @Column(name= "user_email",unique = true)
     @NotBlank(message = "L'email ne peut etre vide")
     @Email
-    @JsonView({ModelUserView.class, AbsenceView.class, LatenessView.class, StudentInscriptionFolderView.class, TrainingView.class, StudentView.class})
+    @JsonView({ModelUserView.class, AbsenceView.class, LatenessView.class, StudentInscriptionFolderView.class, TrainingView.class, StudentView.class, LatenessView.class})
     protected String email;
 
     @Column(name = "user_password", length = 100)
@@ -39,13 +40,13 @@ public class ModelUser {
     @Size(min = 2, max = 100, message = "nom minimum 2 caractères et maximum 100 caractères")
     @Column(name = "user_lastname", length = 100)
     @NotBlank(message = "Le nom ne peut etre vide")
-    @JsonView({ModelUserView.class, AbsenceView.class, StudentInscriptionFolderView.class})
+    @JsonView({ModelUserView.class, AbsenceView.class, StudentInscriptionFolderView.class, StudentView.class, LatenessView.class})
     protected String lastname;
 
     @Size(min = 2, max = 100, message = "prénom minimum 2 caractères et maximum 100 caractères")
     @Column(name = "user_firstname")
     @NotBlank(message = "Le prénom ne peut etre vide")
-    @JsonView({ModelUserView.class, AbsenceView.class, StudentInscriptionFolderView.class})
+    @JsonView({ModelUserView.class, AbsenceView.class, StudentInscriptionFolderView.class, StudentView.class, LatenessView.class})
     protected String firstname;
 
     @Column(name = "user_gender")

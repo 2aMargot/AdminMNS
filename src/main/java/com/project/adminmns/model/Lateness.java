@@ -42,5 +42,6 @@ public class Lateness {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
+    @JsonView(LatenessView.class)
     protected Student studentLateness;
 }
