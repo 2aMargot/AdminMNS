@@ -1,8 +1,9 @@
 package com.project.adminmns.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.view.AbsenceView;
+import com.project.adminmns.view.EmployeeView;
 import com.project.adminmns.view.ModelUserView;
+import com.project.adminmns.view.StudentView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -19,11 +20,13 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class ModelUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @JsonView({ModelUserView.class, StudentView.class})
     protected Integer id;
 
     @Column(name= "user_email",unique = true)
@@ -46,20 +49,21 @@ public class ModelUser {
     @Size(min = 2, max = 100, message = "prénom minimum 2 caractères et maximum 100 caractères")
     @Column(name = "user_firstname")
     @NotBlank(message = "Le prénom ne peut etre vide")
+    @JsonView({ModelUserView.class, StudentView.class, EmployeeView.class})
     @JsonView({ModelUserView.class, AbsenceView.class})
     protected String firstname;
 
     @Column(name = "user_gender")
+    @JsonView({ModelUserView.class, StudentView.class, EmployeeView.class})
     protected String gender;
 
     @Column(name= "user_is_enable",columnDefinition = "boolean default true")
+    @JsonView({ModelUserView.class, StudentView.class, EmployeeView.class})
     @JsonView(ModelUserView.class)
     protected boolean isEnable = true;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
-    @JsonView(ModelUserView.class)
+    @JsonView({ModelUserView.class, EmployeeView.class})
     protected UserRole role = new UserRole(2, "STUDENT", "Juste les droits étudiant");
-
-
 }
