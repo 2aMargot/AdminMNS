@@ -48,5 +48,6 @@ public class StudentInscriptionFolder {
 
     @OneToMany(mappedBy = "studentInscriptionFolder")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonView(StudentInscriptionFolderView.class)
     protected List<Document> documentList;
 }

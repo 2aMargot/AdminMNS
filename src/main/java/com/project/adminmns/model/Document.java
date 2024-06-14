@@ -2,6 +2,7 @@ package com.project.adminmns.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.view.DocumentView;
+import com.project.adminmns.view.StudentInscriptionFolderView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +25,7 @@ public class Document {
     @Column(name = "document_name", length = 50)
     @NotBlank(message = "Le nom du document ne peut etre vide")
     @Size(max = 50, message = "Le nom du document ne peut etre supérieur à maximum 50 caractères")
-    @JsonView(DocumentView.class)
+    @JsonView({DocumentView.class, StudentInscriptionFolderView.class})
     protected String name;
 
     @Column(name = "document_link")
