@@ -16,6 +16,7 @@ public class Absence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "absence_id")
+    @JsonView(AbsenceView.class)
     protected Integer id;
 
     @Column(name = "absence_creation_date")

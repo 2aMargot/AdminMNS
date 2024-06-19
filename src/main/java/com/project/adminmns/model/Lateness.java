@@ -16,6 +16,7 @@ public class Lateness {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lateness_id")
+    @JsonView(LatenessView.class)
     protected Integer id;
 
     @Column(name = "lateness_creation_date")

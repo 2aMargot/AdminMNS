@@ -22,6 +22,7 @@ public class StudentInscriptionFolder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(StudentInscriptionFolderView.class)
     protected Integer id;
 
     @Column(name = "inscription_folder_creation_date")
