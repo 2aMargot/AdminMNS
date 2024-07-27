@@ -12,7 +12,21 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Represents a user role in the system, defining the different roles that users can have.
+ * <p>
+ * This class maps to the "user_role" table in the database and contains information about roles, including
+ * the role's name and description.
+ * There is no possibility of CRUD for this entity.
+ * If you want to add a new role you need to add a new personnalised annotation in security and and this annotation in the Controllers
+ * </p>
+ *
+ * @see ModelUser
+ * @see com.project.adminmns.security.AdminPermission
+ * @see com.project.adminmns.security.DirectorPermission
+ * @see com.project.adminmns.security.StudentPermission
+ * @see com.project.adminmns.security.ValidatorPermission
+ */
 @Entity
 @Data
 @Table(name = "user_role")

@@ -24,11 +24,21 @@ public class DocumentController {
 
     private final DocumentService documentService;
 
+    /**
+     * Constructs a DocumentController with the specified DocumentService.
+     *
+     * @param documentService The DocumentService object used to handle document-related operations.
+     */
     @Autowired
     public DocumentController(DocumentService documentService){
         this.documentService = documentService;
     }
 
+    /**
+     * Retrieves a list of all documents.
+     *
+     * @return A list of Document objects.
+     */
     @GetMapping("/list")
     @JsonView(DocumentView.class)
     @AdminPermission
@@ -36,6 +46,12 @@ public class DocumentController {
         return documentService.documentList();
     }
 
+    /**
+     * Retrieves a document by its ID.
+     *
+     * @param id The ID of the document to retrieve.
+     * @return A ResponseEntity containing the Document object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
@@ -43,6 +59,12 @@ public class DocumentController {
         return documentService.getDocument(id);
     }
 
+    /**
+     * Adds a new document.
+     *
+     * @param newDocument The Document object containing the details of the new document to add.
+     * @return A ResponseEntity containing the added Document object, or an appropriate HTTP status.
+     */
     @PostMapping
     @JsonView(DocumentView.class)
     @AdminPermission
@@ -50,6 +72,13 @@ public class DocumentController {
         return documentService.addDocument(newDocument);
     }
 
+    /**
+     * Updates an existing document.
+     *
+     * @param document The Document object containing the updated document details.
+     * @param id The ID of the document to update.
+     * @return A ResponseEntity containing the updated Document object, or an appropriate HTTP status.
+     */
     @PutMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
@@ -57,6 +86,12 @@ public class DocumentController {
         return documentService.updateDocument(document, id);
     }
 
+    /**
+     * Deletes an existing document by its ID.
+     *
+     * @param id The ID of the document to delete.
+     * @return A ResponseEntity containing the deleted Document object if successful, or an appropriate HTTP status.
+     */
     @DeleteMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission

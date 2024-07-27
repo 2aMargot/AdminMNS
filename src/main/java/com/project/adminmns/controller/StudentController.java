@@ -23,11 +23,21 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    /**
+     * Constructs a StudentController with the specified StudentService.
+     *
+     * @param studentService The StudentService object used to handle student-related operations.
+     */
     @Autowired
     public StudentController(StudentService studentService){
         this.studentService = studentService;
     }
 
+    /**
+     * Retrieves a list of all students.
+     *
+     * @return A list of Student objects.
+     */
     @GetMapping("/list")
     @JsonView(StudentView.class)
     @AdminPermission
@@ -36,6 +46,12 @@ public class StudentController {
         return studentService.studentList();
     }
 
+    /**
+     * Retrieves a student by their ID.
+     *
+     * @param id The ID of the student to retrieve.
+     * @return A ResponseEntity containing the Student object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
@@ -44,6 +60,12 @@ public class StudentController {
         return studentService.getStudent(id);
     }
 
+    /**
+     * Adds a new student.
+     *
+     * @param newStudent The Student object containing the details of the new student to add.
+     * @return A ResponseEntity containing the added Student object, or an appropriate HTTP status.
+     */
     @PostMapping
     @AdminPermission
     @JsonView(StudentView.class)
@@ -52,6 +74,13 @@ public class StudentController {
         return studentService.addStudent(newStudent);
     }
 
+    /**
+     * Updates an existing student.
+     *
+     * @param student The Student object containing the updated student details.
+     * @param id The ID of the student to update.
+     * @return A ResponseEntity containing the updated Student object, or an appropriate HTTP status.
+     */
     @PutMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
@@ -60,6 +89,12 @@ public class StudentController {
         return studentService.updateStudent(student, id);
     }
 
+    /**
+     * Deletes an existing student by their ID.
+     *
+     * @param id The ID of the student to delete.
+     * @return A ResponseEntity containing the deleted Student object if successful, or an appropriate HTTP status.
+     */
     @DeleteMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
