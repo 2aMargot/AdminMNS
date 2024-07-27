@@ -18,6 +18,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Spring Security configuration class that sets up authentication, authorization,
+ * and CORS settings for the application.
+ * <p>
+ * This configuration disables CSRF protection, enables CORS with specific settings,
+ * and sets up JWT-based stateless authentication.
+ * </p>
+ */
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
@@ -32,6 +40,12 @@ public class SecurityConfig {
     @Autowired
     JwtFilter jwtFilter;
 
+    /**
+     * Provides a custom {@link AuthenticationProvider} for authentication using
+     * {@link DaoAuthenticationProvider} with a user details service and password encoder.
+     *
+     * @return The configured {@link AuthenticationProvider}.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider () {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -40,6 +54,14 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+    /**
+     * Configures HTTP security settings, including disabling CSRF protection,
+     * setting up CORS, session management, and adding a JWT filter.
+     *
+     * @param http The {@link HttpSecurity} object used to configure HTTP security.
+     * @return The configured {@link SecurityFilterChain}.
+     * @throws Exception If an error occurs while configuring HTTP security.
+     */
     @Bean
     public SecurityFilterChain httpSecurity (HttpSecurity http) throws Exception {
 
@@ -51,6 +73,11 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Provides CORS configuration for the application.
+     *
+     * @return The configured {@link CorsConfigurationSource}.
+     */
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of("*"));

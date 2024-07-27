@@ -13,6 +13,15 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
 import java.util.List;
 
+
+/**
+ * Represents an inscription folder for a student, which contains information about the student's application
+ * for a specific training program.
+ * <p>
+ * The {@link StudentInscriptionFolder} class holds details about the creation date, deadline, validity of the
+ * inscription folder, and its associated student and training. It also tracks related documents within the folder.
+ * </p>
+ */
 @Getter
 @Setter
 @Entity
@@ -26,11 +35,11 @@ public class StudentInscriptionFolder {
 
     @Column(name = "inscription_folder_creation_date")
     @NotBlank(message = "La date de creation du dossier d'inscription étudiant ne peut etre vide")
-//    @JsonView(StudentInscriptionFolderView.class)
+    @JsonView(StudentInscriptionFolderView.class)
     protected LocalDate creationDate;
 
     @Column(name = "inscription_folder_deadline")
-//    @JsonView(StudentInscriptionFolderView.class)
+    @JsonView(StudentInscriptionFolderView.class)
     protected LocalDate deadline;
 
     @Column(name = "validity")
@@ -39,7 +48,7 @@ public class StudentInscriptionFolder {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_id")
-//    @JsonView(StudentInscriptionFolderView.class)
+    @JsonView(StudentInscriptionFolderView.class)
     protected Student student;
 
     @ManyToOne(optional = false)

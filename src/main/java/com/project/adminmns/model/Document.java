@@ -12,6 +12,14 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a document associated with a student's inscription folder.
+ * <p>
+ * The Document class captures the details of a document, including its name, link, validity, and important dates
+ * related to its deposition, validation, and refusal. It also associates the document with a specific student's inscription
+ * folder and document type.
+ * </p>
+ */
 @Entity
 @Data
 public class Document {

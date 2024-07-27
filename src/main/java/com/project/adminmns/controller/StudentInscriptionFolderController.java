@@ -23,11 +23,21 @@ public class StudentInscriptionFolderController {
 
     private final StudentInscriptionFolderService studentInscriptionFolderService;
 
+    /**
+     * Constructs a StudentInscriptionFolderController with the specified StudentInscriptionFolderService.
+     *
+     * @param studentInscriptionFolderService The StudentInscriptionFolderService object used to handle student inscription folder-related operations.
+     */
     @Autowired
     public StudentInscriptionFolderController(StudentInscriptionFolderService studentInscriptionFolderService){
         this.studentInscriptionFolderService = studentInscriptionFolderService;
     }
 
+    /**
+     * Retrieves a list of all student inscription folders.
+     *
+     * @return A list of StudentInscriptionFolder objects.
+     */
     @GetMapping("/list")
     @JsonView(StudentInscriptionFolderView.class)
     @AdminPermission
@@ -37,6 +47,12 @@ public class StudentInscriptionFolderController {
     }
 
 
+    /**
+     * Retrieves a student inscription folder by ID.
+     *
+     * @param id The ID of the student inscription folder to retrieve.
+     * @return A ResponseEntity containing the StudentInscriptionFolder object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/{id}")
     @AdminPermission
     @JsonView(StudentInscriptionFolderView.class)
@@ -46,6 +62,12 @@ public class StudentInscriptionFolderController {
     }
 
 
+    /**
+     * Adds a new student inscription folder.
+     *
+     * @param newStudentInscriptionFolder The StudentInscriptionFolder object containing the details of the new folder to add.
+     * @return A ResponseEntity containing the added StudentInscriptionFolder object, or an appropriate HTTP status.
+     */
     @PostMapping
     @AdminPermission
     @JsonView(StudentInscriptionFolderView.class)
@@ -54,6 +76,13 @@ public class StudentInscriptionFolderController {
         return studentInscriptionFolderService.addFolder(newStudentInscriptionFolder);
     }
 
+    /**
+     * Updates an existing student inscription folder.
+     *
+     * @param studentInscriptionFolder The StudentInscriptionFolder object containing the updated folder details.
+     * @param id The ID of the folder to update.
+     * @return A ResponseEntity containing the updated StudentInscriptionFolder object, or an appropriate HTTP status.
+     */
     @PutMapping("/{id}")
     @AdminPermission
     @JsonView(StudentInscriptionFolderView.class)
@@ -62,6 +91,12 @@ public class StudentInscriptionFolderController {
         return studentInscriptionFolderService.updateFolder(studentInscriptionFolder, id);
     }
 
+    /**
+     * Deletes an existing student inscription folder by its ID.
+     *
+     * @param id The ID of the student inscription folder to delete.
+     * @return A ResponseEntity containing the deleted StudentInscriptionFolder object if successful, or an appropriate HTTP status.
+     */
     @DeleteMapping("/{id}")
     @AdminPermission
     @JsonView(StudentInscriptionFolderView.class)

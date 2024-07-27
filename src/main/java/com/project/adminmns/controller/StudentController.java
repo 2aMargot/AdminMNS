@@ -4,98 +4,101 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.*;
 import com.project.adminmns.model.Student;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.service.StudentService;
 import com.project.adminmns.view.StudentView;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/student")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class StudentController {
 
-    StudentDao studentDao;
-    LatenessDao latenessDao;
-    AbsenceDao absenceDao;
-    StudentInscriptionFolderDao studentInscriptionFolderDao;
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final StudentService studentService;
 
-    @GetMapping("/student/{id}")
-    @AdminPermission
-    @JsonView(StudentView.class)
-    public ResponseEntity<Student> get(@PathVariable int id) {
-
-        Optional<Student> studentOptional = studentDao.findById(id);
-
-        if (studentOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(studentOptional.get(), HttpStatus.OK);
-
+    /**
+     * Constructs a StudentController with the specified StudentService.
+     *
+     * @param studentService The StudentService object used to handle student-related operations.
+     */
+    @Autowired
+    public StudentController(StudentService studentService){
+        this.studentService = studentService;
     }
 
-    @GetMapping("/student/list")
+    /**
+     * Retrieves a list of all students.
+     *
+     * @return A list of Student objects.
+     */
+    @GetMapping("/list")
     @JsonView(StudentView.class)
     @AdminPermission
     public List<Student> list() {
 
-        return studentDao.findAll();
+        return studentService.studentList();
     }
 
-    @PostMapping("/student")
+    /**
+     * Retrieves a student by their ID.
+     *
+     * @param id The ID of the student to retrieve.
+     * @return A ResponseEntity containing the Student object if found, or an appropriate HTTP status.
+     */
+    @GetMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
-    public ResponseEntity<Student> add(@Valid @RequestBody Student newUser) {
+    public ResponseEntity<Student> get(@PathVariable int id) {
 
-        if (newUser.getId() != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-        studentDao.save(newUser);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        return studentService.getStudent(id);
     }
 
-    @PutMapping("/student/{id}")
+    /**
+     * Adds a new student.
+     *
+     * @param newStudent The Student object containing the details of the new student to add.
+     * @return A ResponseEntity containing the added Student object, or an appropriate HTTP status.
+     */
+    @PostMapping
     @AdminPermission
     @JsonView(StudentView.class)
-    public ResponseEntity<Student> modified(@Valid @RequestBody Student user, @PathVariable int id) {
-        user.setId(id);
+    public ResponseEntity<Student> add(@Valid @RequestBody Student newStudent) {
 
-        Optional<Student> userOptional = studentDao.findById(user.getId());
-
-        if (userOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-
-        user.setPassword(userOptional.get().getPassword());
-
-        studentDao.save(user);
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        return studentService.addStudent(newStudent);
     }
 
-    @DeleteMapping("/student/{id}")
+    /**
+     * Updates an existing student.
+     *
+     * @param student The Student object containing the updated student details.
+     * @param id The ID of the student to update.
+     * @return A ResponseEntity containing the updated Student object, or an appropriate HTTP status.
+     */
+    @PutMapping("/{id}")
+    @AdminPermission
+    @JsonView(StudentView.class)
+    public ResponseEntity<Student> update(@Valid @RequestBody Student student, @PathVariable int id) {
+
+        return studentService.updateStudent(student, id);
+    }
+
+    /**
+     * Deletes an existing student by their ID.
+     *
+     * @param id The ID of the student to delete.
+     * @return A ResponseEntity containing the deleted Student object if successful, or an appropriate HTTP status.
+     */
+    @DeleteMapping("/{id}")
     @AdminPermission
     @JsonView(StudentView.class)
     public ResponseEntity<Student> delete(@PathVariable int id) {
-
-        Optional<Student> studentOptional = studentDao.findById(id);
-
-        if (studentOptional.isPresent()) {
-
-            studentDao.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return studentService.deleteStudent(id);
     }
-
-
 }

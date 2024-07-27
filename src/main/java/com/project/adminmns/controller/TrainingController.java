@@ -23,11 +23,21 @@ public class TrainingController {
 
     private final TrainingService trainingService;
 
+    /**
+     * Constructs a TrainingController with the specified TrainingService.
+     *
+     * @param trainingService The TrainingService object used to handle training-related operations.
+     */
     @Autowired
     public TrainingController(TrainingService trainingService){
         this.trainingService = trainingService;
     }
 
+    /**
+     * Retrieves a list of all trainings.
+     *
+     * @return A list of Training objects.
+     */
     @GetMapping("/list")
     @JsonView(TrainingView.class)
     @AdminPermission
@@ -35,6 +45,12 @@ public class TrainingController {
         return trainingService.trainingList();
     }
 
+    /**
+     * Retrieves a training by its ID.
+     *
+     * @param id The ID of the training to retrieve.
+     * @return A ResponseEntity containing the Training object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
@@ -43,6 +59,12 @@ public class TrainingController {
         return trainingService.getTraining(id);
     }
 
+    /**
+     * Adds a new training.
+     *
+     * @param newTraining The Training object containing the details of the new training to add.
+     * @return A ResponseEntity containing the added Training object, or an appropriate HTTP status.
+     */
     @PostMapping
     @JsonView(TrainingView.class)
     @AdminPermission
@@ -51,6 +73,13 @@ public class TrainingController {
         return trainingService.addTraining(newTraining);
     }
 
+    /**
+     * Updates an existing training.
+     *
+     * @param training The Training object containing the updated training details.
+     * @param id The ID of the training to update.
+     * @return A ResponseEntity containing the updated Training object, or an appropriate HTTP status.
+     */
     @PutMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
@@ -59,6 +88,12 @@ public class TrainingController {
         return trainingService.updateTraining(training, id);
     }
 
+    /**
+     * Deletes an existing training by its ID.
+     *
+     * @param id The ID of the training to delete.
+     * @return A ResponseEntity containing the deleted Training object if successful, or an appropriate HTTP status.
+     */
     @DeleteMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission

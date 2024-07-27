@@ -9,6 +9,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * Represents an employee in the system, extending the base {@link ModelUser} class.
+ * <p>
+ * This class inherits from {@link ModelUser} and adds additional attributes specific to employees, such as
+ * their department. The employee entity maps to a database table where employee-specific details are stored.
+ * </p>
+ *
+ * @see ModelUser
+ */
 @Entity
 @Data
 public class Employee  extends ModelUser{

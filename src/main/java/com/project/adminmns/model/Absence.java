@@ -9,6 +9,13 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
+/**
+ * Represents an absence record for a student.
+ * <p>
+ * The {@link Absence} class captures details about a student's absence, including its creation date, start and end dates,
+ * justification, and validity. It also associates the absence with a specific cause and the student who was absent.
+ * </p>
+ */
 @Entity
 @Data
 public class Absence {

@@ -13,6 +13,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a training session in the system.
+ * <p>
+ * The {@link Training} class captures the details of a training session, including its name, start and end dates,
+ * and the associations with student inscription folders and document types. This class is mapped to a database table
+ * where training session details are stored.
+ * </p>
+ */
 @Entity
 @Data
 public class Training {
