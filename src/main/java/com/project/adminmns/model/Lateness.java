@@ -9,6 +9,14 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a lateness record in the system.
+ * <p>
+ * The {@link Lateness} class captures the details of a lateness event for a student, including the date of the event,
+ * the justification, and its validity. It also associates the lateness with a specific cause and a student.
+ * This class is mapped to a database table where lateness records are stored.
+ * </p>
+ */
 @Entity
 @Data
 public class Lateness {

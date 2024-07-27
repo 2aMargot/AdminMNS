@@ -29,6 +29,12 @@ public class ModelUserController {
         this.modelUserService = modelUserService;
     }
 
+    /**
+     * Retrieves a user by their email address.
+     *
+     * @param email The email address of the user to retrieve.
+     * @return A ResponseEntity containing the ModelUser object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/user-by-email/{email}")
     @AdminPermission
     @JsonView(ModelUserView.class)
@@ -37,6 +43,11 @@ public class ModelUserController {
         return modelUserService.getUserByEmail(email);
     }
 
+    /**
+     * Retrieves a list of all users.
+     *
+     * @return A list of ModelUser objects.
+     */
     @GetMapping("/list")
     @JsonView(ModelUserView.class)
     @AdminPermission
@@ -45,6 +56,12 @@ public class ModelUserController {
         return modelUserService.UserList();
     }
 
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return A ResponseEntity containing the ModelUser object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
@@ -53,6 +70,12 @@ public class ModelUserController {
         return modelUserService.getUser(id);
     }
 
+    /**
+     * Adds a new user.
+     *
+     * @param newUser The ModelUser object containing the details of the new user to add.
+     * @return A ResponseEntity containing the added ModelUser object, or an appropriate HTTP status.
+     */
     @PostMapping
     @AdminPermission
     @JsonView(ModelUserView.class)
@@ -61,6 +84,13 @@ public class ModelUserController {
         return modelUserService.addUser(newUser);
     }
 
+    /**
+     * Updates an existing user.
+     *
+     * @param user The ModelUser object containing the updated user details.
+     * @param id The ID of the user to update.
+     * @return A ResponseEntity containing the updated ModelUser object, or an appropriate HTTP status.
+     */
     @PutMapping("/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)
@@ -69,6 +99,12 @@ public class ModelUserController {
         return modelUserService.updateUser(user, id);
     }
 
+    /**
+     * Deletes an existing user by their ID.
+     *
+     * @param id The ID of the user to delete.
+     * @return A ResponseEntity containing the deleted ModelUser object if successful, or an appropriate HTTP status.
+     */
     @DeleteMapping("/{id}")
     @AdminPermission
     @JsonView(ModelUserView.class)

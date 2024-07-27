@@ -11,6 +11,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a student in the system, extending from the {@link ModelUser} entity.
+ * <p>
+ * This class maps to the "student" table in the database and contains additional information specific
+ * to students that are necessary fro there registration, such as birthdate, birthplace, nationality, and contact details. It also includes
+ * relationships to other entities like {@link Absence}, {@link Lateness}, and {@link StudentInscriptionFolder}.
+ * </p>
+ *
+ * @see ModelUser
+ * @see Absence
+ * @see Lateness
+ * @see StudentInscriptionFolder
+ * @see StudentView
+ */
 @Entity
 @Data
 //@PrimaryKeyJoinColumn(name = "user_id")

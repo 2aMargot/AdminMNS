@@ -11,7 +11,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
+/**
+ * Represents a user entity in the system.
+ * <p>
+ * This entity is mapped to the "model_user" table in the database. It contains basic user information
+ * such as email, password, name, gender, and role. The class uses JPA annotations for entity mapping
+ * and validation annotations to enforce field constraints.
+ * </p>
+ * <p>
+ * This class supports inheritance using the {@code JOINED} strategy, allowing for an entity hierarchy
+ * where this class serves as a base class.
+ * </p>
+ *
+ * @see UserRole
+ * @see ModelUserView
+ * @see AbsenceView
+ * @see StudentInscriptionFolderView
+ * @see StudentView
+ * @see LatenessView
+ */
 @Entity
 @Data
 @Table(name = "model_user")

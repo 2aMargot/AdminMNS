@@ -23,12 +23,22 @@ public class AbsenceController {
 
     private final AbsenceService absenceService;
 
+    /**
+     * Constructs an AbsenceController with the specified AbsenceService.
+     *
+     * @param absenceService The AbsenceService object used to handle absence-related operations.
+     */
     @Autowired
     public AbsenceController(AbsenceService absenceService) {
         this.absenceService = absenceService;
     }
 
 
+    /**
+     * Retrieves a list of all absences.
+     *
+     * @return A list of Absence objects.
+     */
     @GetMapping("/list")
     @JsonView(AbsenceView.class)
     @AdminPermission
@@ -36,6 +46,12 @@ public class AbsenceController {
         return absenceService.AbsenceList();
     }
 
+    /**
+     * Retrieves an absence by its ID.
+     *
+     * @param id The ID of the absence to retrieve.
+     * @return A ResponseEntity containing the Absence object if found, or an appropriate HTTP status.
+     */
     @GetMapping("/{id}")
     @JsonView(AbsenceView.class)
     @AdminPermission
@@ -43,6 +59,12 @@ public class AbsenceController {
         return absenceService.getAbsence(id);
     }
 
+    /**
+     * Adds a new absence.
+     *
+     * @param newAbsence The Absence object containing the details of the new absence to add.
+     * @return A ResponseEntity containing the added Absence object, or an appropriate HTTP status.
+     */
     @PostMapping
     @JsonView(AbsenceView.class)
     @AdminPermission
@@ -50,6 +72,13 @@ public class AbsenceController {
         return absenceService.addAbsence(newAbsence);
     }
 
+    /**
+     * Updates an existing absence.
+     *
+     * @param absence The Absence object containing the updated absence details.
+     * @param id The ID of the absence to update.
+     * @return A ResponseEntity containing the updated Absence object, or an appropriate HTTP status.
+     */
     @PutMapping("/{id}")
     @JsonView(AbsenceView.class)
     @AdminPermission
@@ -57,6 +86,12 @@ public class AbsenceController {
         return absenceService.updateAbsence(absence, id);
     }
 
+    /**
+     * Deletes an existing absence by its ID.
+     *
+     * @param id The ID of the absence to delete.
+     * @return A ResponseEntity containing the deleted Absence object if successful, or an appropriate HTTP status.
+     */
     @DeleteMapping("/{id}")
     @JsonView(AbsenceView.class)
     @AdminPermission

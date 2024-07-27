@@ -13,6 +13,15 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
 import java.util.List;
 
+
+/**
+ * Represents an inscription folder for a student, which contains information about the student's application
+ * for a specific training program.
+ * <p>
+ * The {@link StudentInscriptionFolder} class holds details about the creation date, deadline, validity of the
+ * inscription folder, and its associated student and training. It also tracks related documents within the folder.
+ * </p>
+ */
 @Getter
 @Setter
 @Entity
