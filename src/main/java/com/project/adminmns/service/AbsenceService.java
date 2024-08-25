@@ -1,7 +1,9 @@
 package com.project.adminmns.service;
 
+import com.project.adminmns.dao.AbsenceCauseDao;
 import com.project.adminmns.dao.AbsenceDao;
 import com.project.adminmns.model.Absence;
+import com.project.adminmns.model.AbsenceCause;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,8 @@ import java.util.Optional;
 public class AbsenceService {
 
     private final AbsenceDao absenceDao;
+    private final AbsenceCauseDao absenceCauseDao;
     private final FileUploadService fileUploadService;
-
     private final StudentService studentService;
 
     /**
@@ -39,8 +41,9 @@ public class AbsenceService {
      * @param fileUploadService The {@link FileUploadService} used for file upload and retrieval.
      */
     @Autowired
-    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService, StudentService studentService){
+    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService, StudentService studentService, AbsenceCauseDao absenceCauseDao){
         this.absenceDao = absenceDao;
+        this.absenceCauseDao = absenceCauseDao;
         this.fileUploadService = fileUploadService;
         this.studentService = studentService;
     }
@@ -167,4 +170,7 @@ public class AbsenceService {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    public List<AbsenceCause> AbsenceCauseList() {
+        return absenceCauseDao.findAll();
+    }
 }

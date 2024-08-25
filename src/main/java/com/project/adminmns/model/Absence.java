@@ -49,6 +49,7 @@ public class Absence {
     @ManyToOne
     @JoinColumn(name = "absence_cause_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonView(AbsenceView.class)
     protected AbsenceCause absenceCause;
 
     @ManyToOne(optional = false)

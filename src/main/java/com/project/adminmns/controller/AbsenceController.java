@@ -2,6 +2,7 @@ package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.model.Absence;
+import com.project.adminmns.model.AbsenceCause;
 import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.service.AbsenceService;
@@ -44,6 +45,13 @@ public class AbsenceController {
     @StudentPermission
     public List<Absence> list() {
         return absenceService.AbsenceList();
+    }
+
+    @GetMapping("/causes")
+    @JsonView(AbsenceView.class)
+    @StudentPermission
+    public List<AbsenceCause> listAbsenceCause() {
+        return absenceService.AbsenceCauseList();
     }
 
     /**
