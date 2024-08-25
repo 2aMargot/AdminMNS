@@ -30,6 +30,7 @@ public class AbsenceService {
     private final AbsenceDao absenceDao;
     private final FileUploadService fileUploadService;
 
+    private final StudentService studentService;
 
     /**
      * Constructs an AbsenceService with the specified {@link AbsenceDao} and {@link FileUploadService}.
@@ -38,9 +39,10 @@ public class AbsenceService {
      * @param fileUploadService The {@link FileUploadService} used for file upload and retrieval.
      */
     @Autowired
-    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService){
+    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService, StudentService studentService){
         this.absenceDao = absenceDao;
         this.fileUploadService = fileUploadService;
+        this.studentService = studentService;
     }
 
 
@@ -90,6 +92,7 @@ public class AbsenceService {
             return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
         }
 
+        newAbsence.setStudentAbsence(studentService.getStudentByEmail(newAbsence.getStudentAbsence().getEmail()));
         absenceDao.save(newAbsence);
 
         return new ResponseEntity<>(newAbsence, HttpStatus.CREATED);
@@ -112,6 +115,7 @@ public class AbsenceService {
         }
 
         absence.setId(id);
+        absence.setStudentAbsence(studentService.getStudentByEmail(absence.getStudentAbsence().getEmail()));
         this.absenceDao.save(absence);
         return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
     }

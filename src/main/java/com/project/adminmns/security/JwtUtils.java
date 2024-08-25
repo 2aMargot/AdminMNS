@@ -30,7 +30,7 @@ public class JwtUtils {
     public String generateToken(UserDetails userDetails) {
 
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256,"secretJwt")
+                .signWith(SignatureAlgorithm.HS256,secretJwt)
                 .setSubject(userDetails.getUsername())
 //                .setIssuedAt(Date.from(Instant.ofEpochSecond()))   //création du jwt
 //                .setExpiration(Date.from(Instant.ofEpochSecond())  //expiration du jwt
@@ -51,7 +51,7 @@ public class JwtUtils {
     public String getSubjectFromJwt(String jwt) {
 
         return Jwts.parser()
-                .setSigningKey("secretJwt")
+                .setSigningKey(secretJwt)
                 .parseClaimsJws(jwt)
                 .getBody()
                 .getSubject();

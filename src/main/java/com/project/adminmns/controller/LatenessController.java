@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.LatenessDao;
 import com.project.adminmns.model.Lateness;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.service.LatenessService;
 import com.project.adminmns.view.LatenessView;
 import jakarta.validation.Valid;
@@ -40,7 +41,7 @@ public class LatenessController {
      */
     @GetMapping("/list")
     @JsonView(LatenessView.class)
-    @AdminPermission
+    @StudentPermission
     public List<Lateness> list() {
 
         return latenessService.latenessList();

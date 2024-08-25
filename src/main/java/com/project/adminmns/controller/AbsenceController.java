@@ -41,7 +41,7 @@ public class AbsenceController {
      */
     @GetMapping("/list")
     @JsonView(AbsenceView.class)
-    @AdminPermission
+    @StudentPermission
     public List<Absence> list() {
         return absenceService.AbsenceList();
     }
@@ -67,7 +67,7 @@ public class AbsenceController {
      */
     @PostMapping
     @JsonView(AbsenceView.class)
-    @AdminPermission
+    @StudentPermission
     public ResponseEntity<Absence> add(@Valid @RequestBody Absence newAbsence) {
         return absenceService.addAbsence(newAbsence);
     }
