@@ -3,7 +3,7 @@ VALUES
     ('ADMIN','tous les droits'),
     ('STUDENT','Juste les droits étudiant'),
     ('DIRECTOR','Juste les droits étudiant'),
-    ('INSCRIPTIONMANAGER','Validation document d\'incription'),
+    ('VALIDATOR','Validation document'),
     ('ABSENCEMANAGER','Peux tout voir');
 
 
@@ -11,10 +11,10 @@ VALUES
 INSERT INTO `model_user` (`role_id`,`user_firstname`,`user_lastname`,`user_email`,`user_password`,`user_gender`)
 VALUES
     (2,'Sophie','Martin','sophie.martin@example.com','$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK','F'),
-    (1,'Hugo','Bernard','hugo.bernard@example.com','$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK','M'),
-    (2,'Manon','Durand','manon.durand_intern@example.com','MotDePasseManon','F'),
-    (2,'Paul','Leroy','paul.leroy_intern@example.com','MotDePassePaul','M'),
-    (2,'Camille','Lefevre','camille.lefevre_intern@example.com','MotDePasseCamille','F'),
+    (2,'Hugo','Bernard','hugo.bernard@example.com','$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK','M'),
+    (2,'Etudiant','Etudiant','Etudiant@example.com','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','F'),
+    (1,'Admin','Admin','admin@example.com','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','M'),
+    (4,'Validator','Validator','Validator','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','F'),
     (2,'Gabriel','Dubois','gabriel.dubois_intern@example.com','MotDePasseGabriel','M'),
     (2,'Louise','Moreau','louise.moreau_intern@example.com','MotDePasseLouise','F'),
     (2,'Jules','Garcia','jules.garcia_intern@example.com','MotDePasseJules','M'),
@@ -503,6 +503,10 @@ VALUES
     (2,'Victor', 'Roy', 'victor.roy40@example.com', 'MotDePasseVictor', 'M');
 
 
+INSERT INTO `employee` (`user_id`,`employee_department`)
+VALUES
+    (4,'Informatique'),
+    (5,'Administration');
 
 INSERT INTO `doc_type` (`doctype_name`,`doctype_description`)
 VALUES
@@ -552,8 +556,6 @@ VALUES
     (1, DATE '2024-03-18','Melilla','India','16485','Ap #326-5966 Ligula Ave','São Gonçalo','08 41 27 57 80','1 24 26 15 882 679 25','844 3446 U'),
     (2, DATE '2020-04-19','Hong Kong','New Zealand','20718','Ap #691-452 Consequat Avenue','Augusta','09 31 84 01 38','1 76 62 72 624 503 89','808 1528 H'),
     (3, DATE '2021-05-17','Bilbo','South Korea','471734','P.O. Box 952, 8022 Eu St.','Arica','03 39 19 01 61','1 49 59 63 104 341 85','246 9873 T'),
-    (4, DATE '2022-06-16','Hulst','Norway','820667','P.O. Box 551, 3125 Ligula Rd.','Hamburg','05 37 21 93 23','1 21 66 22 461 970 12','782 0487 P'),
-    (5, DATE '2025-07-15','Montague','United States','0311','2854 Lobortis. Rd.','Orito','07 73 96 61 94','1 45 09 82 167 422 17','730 7986 R'),
     (6, DATE '2000-01-01', 'Paris', 'French', '75000', '1 Rue de la Liberté', 'Paris', '01 23 45 67 89', '1 23 45 67 890 123 45', '123 4567 A'),
     (7, DATE '2000-02-02', 'Lyon', 'French', '69000', '2 Rue de la Paix', 'Lyon', '01 23 45 67 88', '1 23 45 67 890 123 46', '123 4567 B'),
     (8, DATE '2000-03-03', 'Marseille', 'French', '13000', '3 Rue du Soleil', 'Marseille', '01 23 45 67 87', '1 23 45 67 890 123 47', '123 4567 C'),
@@ -686,8 +688,8 @@ VALUES
     (DATE '2024-04-19', DATE '2026-12-09',1,1, null),
     ('2024-11-15','2028-01-13',2,1, false),
     ('2024-02-17','2027-06-20',3,2, null),
-    ('2025-03-23','2026-07-18',4,1, null),
-    ('2023-08-21','2027-04-07',5,3, true);
+    ('2025-03-23','2026-07-18',6,1, null),
+    ('2023-08-21','2027-04-07',7,3, true);
 
 
 
@@ -704,10 +706,10 @@ VALUES
 INSERT INTO `absence` (`absence_creation_date`,`absence_end`,`absence_start`,`absence_justification`,student_id,absence_cause_id, `absence_validity`)
 VALUES
     ('2025-03-01','2024-07-26 19:08','2025-03-26 09:00','https://reddit.com/sub/cars?search=1&q=de',1,1, null),
-    ('2023-10-14','2023-08-06 22:40','2023-07-05 03:12','http://pinterest.com/fr?search=1',2,NULL, null),
-    ('2023-10-10','2024-05-26 05:16','2024-08-19 20:34','https://zoom.us/one?g=1',3,NULL, 1),
-    ('2024-12-12','2024-12-05 19:43','2024-02-10 09:42','https://zoom.us/en-us?str=se',2,2, 0),
-    ('2023-06-16','2024-06-15 20:24','2024-04-05 09:14','https://youtube.com/sub/cars?ad=115',1,1,0);
+    ('2023-10-14','2023-08-06 22:40','2023-07-05 03:12','http://pinterest.com/fr?search=1',12,5, null),
+    ('2023-10-10','2024-05-26 05:16','2024-08-19 20:34','https://zoom.us/one?g=1',20,6, 1),
+    ('2024-12-12','2024-12-05 19:43','2024-02-10 09:42','https://zoom.us/en-us?str=se',15,2, 0),
+    ('2023-06-16','2024-06-15 20:24','2024-04-05 09:14','https://youtube.com/sub/cars?ad=115',7,1,0);
 
 INSERT INTO `lateness` (`lateness_creation_date`,`lateness_date`,`lateness_justification`,student_id,lateness_cause_id, `lateness_validity`)
 VALUES
@@ -715,7 +717,7 @@ VALUES
     ('2023-06-11','2024-12-11 09:49','http://zoom.us/one?gi=100',3,1,1),
     ('2024-02-02','2024-12-01 10:42','https://google.com/sub/cars?ab=441&aad=2',3,1, 0),
     ('2024-12-01','2023-05-31 05:46','http://walmart.com/fr?ad=115',2,NULL, null),
-    ('2024-11-16','2023-05-31 07:32','http://reddit.com/sub/cars?ad=115',4,2, 1);
+    ('2024-11-16','2023-05-31 07:32','http://reddit.com/sub/cars?ad=115',6,2, 1);
 
 
 INSERT INTO `doctypextraining` (`training_id`,`doctype_id`)
