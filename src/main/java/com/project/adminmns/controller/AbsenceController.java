@@ -57,8 +57,8 @@ public class AbsenceController {
     @GetMapping("/student/{id}")
     @JsonView(AbsenceView.class)
     @StudentPermission
-    public ResponseEntity<Absence> listAbsenceByStudent(@PathVariable int id) {
-        return absenceService.getAbsenceByStudent;
+    public ResponseEntity<Absence[]> listAbsenceByStudent(@PathVariable int id) {
+        return absenceService.getAbsenceByStudent(id);
     }
 
     /**

@@ -78,13 +78,14 @@ public class AbsenceService {
         return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Absence> getAbsenceByStudent(int id) {
+    public ResponseEntity<Absence[]> getAbsenceByStudent(int id) {
         Optional<Student> studentOptional = this.studentDao.findById(id);
 
         if (studentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
+        Absence[] absencelist = this.absenceDao.findByIdStudent(id);
+        return new ResponseEntity<>(absencelist, HttpStatus.OK);
     }
 
     /**
