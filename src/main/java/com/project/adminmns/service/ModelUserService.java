@@ -1,17 +1,11 @@
 package com.project.adminmns.service;
 
 import com.project.adminmns.dao.ModelUserDao;
-import com.project.adminmns.dao.StudentDao;
 import com.project.adminmns.model.ModelUser;
-import com.project.adminmns.model.Student;
-import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;

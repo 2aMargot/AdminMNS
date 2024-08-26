@@ -1,23 +1,23 @@
 package com.project.adminmns.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.ModelUserDao;
 import com.project.adminmns.model.ModelUser;
-import com.project.adminmns.security.AppUserDetails;
 import com.project.adminmns.security.JwtUtils;
-import com.project.adminmns.view.ModelUserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -71,6 +71,10 @@ public class ConnexionController {
      */
     @PostMapping("/inscription")
     public ResponseEntity<Map<String, Object>> inscription (@RequestBody ModelUser user){
+        Optional<ModelUser> modelUser = userDao.findByEmail(user.getEmail());
+        if(modelUser.isPresent()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 

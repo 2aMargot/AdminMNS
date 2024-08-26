@@ -4,6 +4,7 @@ import com.project.adminmns.dao.AbsenceDao;
 import com.project.adminmns.dao.AbsenceCauseDao;
 import com.project.adminmns.model.Absence;
 import com.project.adminmns.model.AbsenceCause;
+import com.project.adminmns.model.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,7 +46,7 @@ class AbsenceServiceTest {
         when(absenceDao.findAll()).thenReturn(expectedAbsences);
 
         // Act
-        List<Absence> actualAbsences = absenceService.AbsenceList();
+        List<Absence> actualAbsences = absenceService.absenceList();
 
         // Assert
         assertEquals(expectedAbsences, actualAbsences);
@@ -101,6 +102,8 @@ class AbsenceServiceTest {
     void addAbsence_withNewId() {
         // Arrange
         Absence newAbsence = new Absence();
+        Student student = new Student();
+        newAbsence.setStudentAbsence(student);
         when(studentService.getStudentByEmail(anyString())).thenReturn(newAbsence.getStudentAbsence());
 
         // Act
@@ -116,6 +119,8 @@ class AbsenceServiceTest {
     void updateAbsence_found() {
         // Arrange
         Absence existingAbsence = new Absence();
+        Student student = new Student();
+        existingAbsence.setStudentAbsence(student);
         existingAbsence.setId(1);
         when(absenceDao.findById(anyInt())).thenReturn(Optional.of(existingAbsence));
         when(studentService.getStudentByEmail(anyString())).thenReturn(existingAbsence.getStudentAbsence());
@@ -177,7 +182,7 @@ class AbsenceServiceTest {
         when(absenceCauseDao.findAll()).thenReturn(expectedAbsenceCauses);
 
         // Act
-        List<AbsenceCause> actualAbsenceCauses = absenceService.AbsenceCauseList();
+        List<AbsenceCause> actualAbsenceCauses = absenceService.absenceCauseList();
 
         // Assert
         assertEquals(expectedAbsenceCauses, actualAbsenceCauses);
