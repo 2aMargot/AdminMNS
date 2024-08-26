@@ -2,8 +2,10 @@ package com.project.adminmns.service;
 
 import com.project.adminmns.dao.AbsenceCauseDao;
 import com.project.adminmns.dao.AbsenceDao;
+import com.project.adminmns.dao.StudentDao;
 import com.project.adminmns.model.Absence;
 import com.project.adminmns.model.AbsenceCause;
+import com.project.adminmns.model.Student;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import java.util.Optional;
 public class AbsenceService {
 
     private final AbsenceDao absenceDao;
+    private final StudentDao studentDao;
     private final AbsenceCauseDao absenceCauseDao;
     private final FileUploadService fileUploadService;
     private final StudentService studentService;
@@ -41,11 +44,12 @@ public class AbsenceService {
      * @param fileUploadService The {@link FileUploadService} used for file upload and retrieval.
      */
     @Autowired
-    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService, StudentService studentService, AbsenceCauseDao absenceCauseDao){
+    public AbsenceService(AbsenceDao absenceDao, FileUploadService fileUploadService, StudentService studentService, AbsenceCauseDao absenceCauseDao, StudentDao studentDao){
         this.absenceDao = absenceDao;
         this.absenceCauseDao = absenceCauseDao;
         this.fileUploadService = fileUploadService;
         this.studentService = studentService;
+        this.studentDao = studentDao;
     }
 
 
@@ -69,6 +73,15 @@ public class AbsenceService {
         Optional<Absence> absenceOptional = this.absenceDao.findById(id);
 
         if (absenceOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Absence> getAbsenceByStudent(int id) {
+        Optional<Student> studentOptional = this.studentDao.findById(id);
+
+        if (studentOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(absenceOptional.get(), HttpStatus.OK);
