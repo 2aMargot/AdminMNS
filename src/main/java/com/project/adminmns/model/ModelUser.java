@@ -41,7 +41,7 @@ public class ModelUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @JsonView({ModelUserView.class, AbsenceView.class, StudentInscriptionFolderView.class, StudentView.class, LatenessView.class})
+    @JsonView({ModelUserView.class, StudentInscriptionFolderView.class, StudentView.class, LatenessView.class})
     protected Integer id;
 
     @Column(name= "user_email",unique = true)

@@ -4,6 +4,8 @@ import com.project.adminmns.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Repository interface for managing {@link Student} entities.
  * <p>
@@ -14,4 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StudentDao extends JpaRepository<Student, Integer> {
+    Optional<Student> findByEmail(String email);
 }

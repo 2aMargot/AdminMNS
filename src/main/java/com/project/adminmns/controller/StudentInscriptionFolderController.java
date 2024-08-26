@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.adminmns.dao.StudentInscriptionFolderDao;
 import com.project.adminmns.model.StudentInscriptionFolder;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.service.StudentInscriptionFolderService;
 import com.project.adminmns.view.StudentInscriptionFolderView;
 import jakarta.validation.Valid;
@@ -40,7 +41,7 @@ public class StudentInscriptionFolderController {
      */
     @GetMapping("/list")
     @JsonView(StudentInscriptionFolderView.class)
-    @AdminPermission
+    @StudentPermission
     public List<StudentInscriptionFolder> list() {
 
         return studentInscriptionFolderService.folderList();

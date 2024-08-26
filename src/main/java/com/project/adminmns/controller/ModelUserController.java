@@ -5,6 +5,7 @@ import com.project.adminmns.dao.*;
 import com.project.adminmns.model.ModelUser;
 import com.project.adminmns.model.Student;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.service.ModelUserService;
 import com.project.adminmns.view.ModelUserView;
 import jakarta.validation.Valid;
@@ -36,7 +37,7 @@ public class ModelUserController {
      * @return A ResponseEntity containing the ModelUser object if found, or an appropriate HTTP status.
      */
     @GetMapping("/user-by-email/{email}")
-    @AdminPermission
+    @StudentPermission
     @JsonView(ModelUserView.class)
     public ResponseEntity<ModelUser> getByEmail(@PathVariable String email) {
 

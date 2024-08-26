@@ -60,6 +60,19 @@ public class StudentService {
 
     }
 
+    public Student getStudentByEmail(String email) {
+
+        Optional<Student> studentOptional = studentDao.findByEmail(email);
+
+        if (studentOptional.isEmpty()) {
+            return null;
+        }
+
+        return studentOptional.get();
+
+    }
+
+
     /**
      * Adds a new {@link Student} entity.
      *
