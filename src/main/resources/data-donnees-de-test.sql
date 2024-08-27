@@ -12,9 +12,9 @@ INSERT INTO `model_user` (`role_id`,`user_firstname`,`user_lastname`,`user_email
 VALUES
     (2,'Sophie','Martin','sophie.martin@example.com','$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK','F'),
     (2,'Hugo','Bernard','hugo.bernard@example.com','$2y$10$pjx8qPA0Vvh6O1PvoOo2euJyBD77IzuYvSeXtVl0lMREtNxSRn1kK','M'),
-    (2,'Etudiant','Etudiant','Etudiant@example.com','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','F'),
+    (2,'Etudiant','Etudiant','etudiant@example.com','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','F'),
     (1,'Admin','Admin','admin@example.com','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','M'),
-    (4,'Validator','Validator','Validator','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','F'),
+    (4,'Validator','Validator','validator@example.com','$2y$10$k9PKYs3krl7LRvMbMIbKXusup7aFM4DZkGCrRorFNnhVwjcUyQVKK','F'),
     (2,'Gabriel','Dubois','gabriel.dubois_intern@example.com','MotDePasseGabriel','M'),
     (2,'Louise','Moreau','louise.moreau_intern@example.com','MotDePasseLouise','F'),
     (2,'Jules','Garcia','jules.garcia_intern@example.com','MotDePasseJules','M'),
@@ -528,6 +528,7 @@ VALUES
 
 INSERT INTO absence_cause (absence_cause_name)
 VALUES
+    ('Injustifié'),
     ('Accident du travail'),
     ('Centre fermé'),
     ('Congés de naissance ou d’adoption'),

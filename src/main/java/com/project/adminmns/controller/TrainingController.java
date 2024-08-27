@@ -1,20 +1,16 @@
 package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.dao.TrainingDao;
 import com.project.adminmns.model.Training;
 import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.service.TrainingService;
 import com.project.adminmns.view.TrainingView;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/training")
 @RestController
