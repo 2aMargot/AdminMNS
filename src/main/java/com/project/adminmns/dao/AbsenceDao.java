@@ -20,7 +20,7 @@ import java.util.Optional;
 public interface AbsenceDao extends JpaRepository<Absence, Integer> {
 
     @Query(
-            value = "SELECT * FROM absence a WHERE a.student_id = {id}",
+            value = "SELECT * FROM absence a WHERE a.student_id = ?1",
             nativeQuery = true)
     Absence[] findByIdStudent(Integer id);
 }
