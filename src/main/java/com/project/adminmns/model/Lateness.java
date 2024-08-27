@@ -1,7 +1,6 @@
 package com.project.adminmns.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.view.AbsenceView;
 import com.project.adminmns.view.LatenessView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

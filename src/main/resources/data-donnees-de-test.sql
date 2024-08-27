@@ -528,6 +528,7 @@ VALUES
 
 INSERT INTO absence_cause (absence_cause_name)
 VALUES
+    ('Injustifié'),
     ('Accident du travail'),
     ('Centre fermé'),
     ('Congés de naissance ou d’adoption'),

@@ -8,13 +8,10 @@ import com.project.adminmns.security.StudentPermission;
 import com.project.adminmns.service.AbsenceService;
 import com.project.adminmns.view.AbsenceView;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @RequestMapping("absence")
@@ -44,14 +41,14 @@ public class AbsenceController {
     @JsonView(AbsenceView.class)
     @StudentPermission
     public List<Absence> list() {
-        return absenceService.AbsenceList();
+        return absenceService.absenceList();
     }
 
     @GetMapping("/causes")
     @JsonView(AbsenceView.class)
     @StudentPermission
     public List<AbsenceCause> listAbsenceCause() {
-        return absenceService.AbsenceCauseList();
+        return absenceService.absenceCauseList();
     }
 
     /**
@@ -107,16 +104,5 @@ public class AbsenceController {
         return absenceService.deleteAbsence(id);
     }
 
-//    @ResponseBody
-//    @StudentPermission
-//    @PostMapping("/upload")
-//    public ResponseEntity<byte[]> uploadFile(InputStream inputStream, String fileName) throws IOException {
-//        return absenceService.uploadAbsence(inputStream, fileName);
-//    }
-//
-//    @ResponseBody
-//    @GetMapping("/download/{fileName}")
-//    public byte[] getFile(@PathVariable String fileName) throws IOException {
-//        return absenceService.getFileFromUploadFolder(fileName);
-//    }
+
 }

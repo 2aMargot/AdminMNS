@@ -4,14 +4,10 @@ import com.project.adminmns.dao.AbsenceCauseDao;
 import com.project.adminmns.dao.AbsenceDao;
 import com.project.adminmns.model.Absence;
 import com.project.adminmns.model.AbsenceCause;
-import jakarta.validation.Valid;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +50,7 @@ public class AbsenceService {
      *
      * @return A list of {@link Absence} objects.
      */
-    public List<Absence> AbsenceList() {
+    public List<Absence> absenceList() {
         return absenceDao.findAll();
     }
 
@@ -170,7 +166,7 @@ public class AbsenceService {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    public List<AbsenceCause> AbsenceCauseList() {
+    public List<AbsenceCause> absenceCauseList() {
         return absenceCauseDao.findAll();
     }
 }
