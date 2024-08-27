@@ -32,7 +32,7 @@ class ConnexionControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-//    @Test
+    @Test
     void testConnexion() throws Exception {
         ModelUser user = new ModelUser();
         user.setFirstname("firstname");
@@ -53,7 +53,7 @@ class ConnexionControllerIntegrationTest {
                 .andExpect(jsonPath("$.jwt").exists());
     }
 
-//    @Test
+    @Test
     void testInscription() throws Exception {
         ModelUser user = new ModelUser();
         user.setEmail("newuser@example.com");
@@ -68,7 +68,7 @@ class ConnexionControllerIntegrationTest {
                 .andExpect(jsonPath("$.message").value("utilisateur créé"));
     }
 
-//    @Test
+    @Test
     void testInscriptionFails() throws Exception {
         ModelUser user = new ModelUser();
         user.setEmail("failingUser@example.com");
