@@ -1,99 +1,97 @@
 package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.dao.DocTypeDao;
 import com.project.adminmns.model.DocType;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.service.DocTypeService;
 import com.project.adminmns.view.DocTypeView;
-import com.project.adminmns.view.TrainingView;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@RequestMapping("/doctype")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class DocTypeController {
 
-    protected DocTypeDao docTypeDao;
+    private final DocTypeService docTypeService;
 
-    @GetMapping("/doctype/list")
+    /**
+     * Constructs a DocTypeController with the specified DocTypeService.
+     *
+     * @param docTypeService The DocTypeService object used to handle document type-related operations.
+     */
+    @Autowired
+    public DocTypeController(DocTypeService docTypeService){
+        this.docTypeService = docTypeService;
+    }
+
+    /**
+     * Retrieves a list of all document types.
+     *
+     * @return A list of DocType objects.
+     */
+    @GetMapping("/list")
     @JsonView(DocTypeView.class)
     @AdminPermission
-    public List<DocType> liste() {
-        // affiche la liste de tous les doctypes
-        return docTypeDao.findAll();
+    public List<DocType> list() {
+       return docTypeService.doctypeList();
     }
 
 
-    @GetMapping("/doctype/{id}")
+    /**
+     * Retrieves a document type by its ID.
+     *
+     * @param id The ID of the document type to retrieve.
+     * @return A ResponseEntity containing the DocType object if found, or an appropriate HTTP status.
+     */
+    @GetMapping("/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> get(@PathVariable int id) {
-        // affiche un doctype par son ID
-        Optional<DocType> docTypeOptional = this.docTypeDao.findById(id);
-
-        if (docTypeOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
+        return docTypeService.getDocType(id);
     }
 
-    @PostMapping("/doctype")
+    /**
+     * Adds a new document type.
+     *
+     * @param newDocType The DocType object containing the details of the new document type to add.
+     * @return A ResponseEntity containing the added DocType object, or an appropriate HTTP status.
+     */
+    @PostMapping
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> add(@Valid @RequestBody DocType newDocType) {
-
-        //recherche d'un doctype sélectionné
-        if (newDocType.getId() != null) {
-            Optional<DocType> docTypeOptional = this.docTypeDao.findById(newDocType.getId());
-
-            // l'utilisateur tente de modifier un doctype qui n'existe pas ou plus
-            if (docTypeOptional.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            this.docTypeDao.save(newDocType);
-            return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
-        }
-        // ajout sauvé en base de données
-        docTypeDao.save(newDocType);
-        return new ResponseEntity<>(newDocType, HttpStatus.CREATED);
+        return docTypeService.addDocType(newDocType);
     }
 
-    @PutMapping("/doctype/{id}")
+    /**
+     * Updates an existing document type.
+     *
+     * @param docType The DocType object containing the updated document type details.
+     * @param id The ID of the document type to update.
+     * @return A ResponseEntity containing the updated DocType object, or an appropriate HTTP status.
+     */
+    @PutMapping("/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> update(@Valid @RequestBody DocType docType, @PathVariable int id) {
-        // modification sur un doctype
-        docType.setId(id);
-
-        Optional<DocType> docTypeOptional = docTypeDao.findById(docType.getId());
-
-        //l'utilisateur tente de modifier un docType qui n'existe pas/plus
-        if (docTypeOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        this.docTypeDao.save(docType);
-        return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
+        return docTypeService.updateDocType(docType, id);
     }
 
-    @DeleteMapping("/doctype/{id}")
+    /**
+     * Deletes an existing document type by its ID.
+     *
+     * @param id The ID of the document type to delete.
+     * @return A ResponseEntity containing the deleted DocType object if successful, or an appropriate HTTP status.
+     */
+    @DeleteMapping("/{id}")
     @JsonView(DocTypeView.class)
     @AdminPermission
     public ResponseEntity<DocType> delete(@PathVariable int id) {
-        // suppression d'un doctype
-        Optional<DocType> docTypeOptional = this.docTypeDao.findById(id);
-
-        if (docTypeOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        docTypeDao.deleteById(id);
-        return new ResponseEntity<>(docTypeOptional.get(), HttpStatus.OK);
+        return docTypeService.deleteDocType(id);
     }
 }

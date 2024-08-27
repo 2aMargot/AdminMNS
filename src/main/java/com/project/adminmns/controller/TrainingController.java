@@ -1,99 +1,100 @@
 package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.dao.TrainingDao;
 import com.project.adminmns.model.Training;
 import com.project.adminmns.security.AdminPermission;
+import com.project.adminmns.service.TrainingService;
 import com.project.adminmns.view.TrainingView;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@RequestMapping("/training")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class TrainingController {
 
-    protected TrainingDao trainingDao;
+    private final TrainingService trainingService;
 
-    @GetMapping("/training/list")
-    @JsonView(TrainingView.class)
-    @AdminPermission
-    public List<Training> liste() {
-        return trainingDao.findAll();
+    /**
+     * Constructs a TrainingController with the specified TrainingService.
+     *
+     * @param trainingService The TrainingService object used to handle training-related operations.
+     */
+    @Autowired
+    public TrainingController(TrainingService trainingService){
+        this.trainingService = trainingService;
     }
 
+    /**
+     * Retrieves a list of all trainings.
+     *
+     * @return A list of Training objects.
+     */
+    @GetMapping("/list")
+    @JsonView(TrainingView.class)
+    @AdminPermission
+    public List<Training> list() {
+        return trainingService.trainingList();
+    }
 
-    @GetMapping("/training/{id}")
+    /**
+     * Retrieves a training by its ID.
+     *
+     * @param id The ID of the training to retrieve.
+     * @return A ResponseEntity containing the Training object if found, or an appropriate HTTP status.
+     */
+    @GetMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> get(@PathVariable int id) {
 
-        Optional<Training> trainingOptional = this.trainingDao.findById(id);
-
-        if (trainingOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
+        return trainingService.getTraining(id);
     }
 
-    @PostMapping("/training")
+    /**
+     * Adds a new training.
+     *
+     * @param newTraining The Training object containing the details of the new training to add.
+     * @return A ResponseEntity containing the added Training object, or an appropriate HTTP status.
+     */
+    @PostMapping
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> add(@Valid @RequestBody Training newTraining) {
 
-        //mise à jour
-        if (newTraining.getId() != null) {
-            Optional<Training> trainingOptional = this.trainingDao.findById(newTraining.getId());
-
-            // l'utilisateur tente de modifier un training qui n'existe pas ou plus
-            if (trainingOptional.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-
-            this.trainingDao.save(newTraining);
-
-            return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
-        }
-
-        trainingDao.save(newTraining);
-
-        return new ResponseEntity<>(newTraining, HttpStatus.CREATED);
+        return trainingService.addTraining(newTraining);
     }
 
-    @PutMapping("/training/{id}")
+    /**
+     * Updates an existing training.
+     *
+     * @param training The Training object containing the updated training details.
+     * @param id The ID of the training to update.
+     * @return A ResponseEntity containing the updated Training object, or an appropriate HTTP status.
+     */
+    @PutMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> update(@Valid @RequestBody Training training, @PathVariable int id) {
-        training.setId(id);
 
-        Optional<Training> trainingOptional = trainingDao.findById(training.getId());
-
-        //l'utilisateur tente de modifier un training qui n'existe pas/plus
-        if (trainingOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        this.trainingDao.save(training);
-        return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
+        return trainingService.updateTraining(training, id);
     }
 
-    @DeleteMapping("/training/{id}")
+    /**
+     * Deletes an existing training by its ID.
+     *
+     * @param id The ID of the training to delete.
+     * @return A ResponseEntity containing the deleted Training object if successful, or an appropriate HTTP status.
+     */
+    @DeleteMapping("/{id}")
     @JsonView(TrainingView.class)
     @AdminPermission
     public ResponseEntity<Training> delete(@PathVariable int id) {
 
-        Optional<Training> trainingOptional = this.trainingDao.findById(id);
-
-        if (trainingOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        trainingDao.deleteById(id);
-        return new ResponseEntity<>(trainingOptional.get(), HttpStatus.OK);
+        return trainingService.deleteTraining(id);
     }
 }

@@ -1,98 +1,96 @@
 package com.project.adminmns.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.adminmns.dao.DocumentDao;
 import com.project.adminmns.model.Document;
 import com.project.adminmns.security.AdminPermission;
-import com.project.adminmns.security.StudentPermission;
+import com.project.adminmns.service.DocumentService;
 import com.project.adminmns.view.DocumentView;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@RequestMapping("/document")
 @RestController
 @CrossOrigin
-@AllArgsConstructor
 public class DocumentController {
 
-    protected DocumentDao documentDao;
+    private final DocumentService documentService;
 
-    @GetMapping("/document/list")
-    @JsonView(DocumentView.class)
-    @AdminPermission
-    public List<Document> liste() {
-        return documentDao.findAll();
+    /**
+     * Constructs a DocumentController with the specified DocumentService.
+     *
+     * @param documentService The DocumentService object used to handle document-related operations.
+     */
+    @Autowired
+    public DocumentController(DocumentService documentService){
+        this.documentService = documentService;
     }
 
+    /**
+     * Retrieves a list of all documents.
+     *
+     * @return A list of Document objects.
+     */
+    @GetMapping("/list")
+    @JsonView(DocumentView.class)
+    @AdminPermission
+    public List<Document> list() {
+        return documentService.documentList();
+    }
 
-    @GetMapping("/document/{id}")
+    /**
+     * Retrieves a document by its ID.
+     *
+     * @param id The ID of the document to retrieve.
+     * @return A ResponseEntity containing the Document object if found, or an appropriate HTTP status.
+     */
+    @GetMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> get(@PathVariable int id) {
-
-        Optional<Document> documentOptional = this.documentDao.findById(id);
-
-        if (documentOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
+        return documentService.getDocument(id);
     }
 
-    @PostMapping("/document")
+    /**
+     * Adds a new document.
+     *
+     * @param newDocument The Document object containing the details of the new document to add.
+     * @return A ResponseEntity containing the added Document object, or an appropriate HTTP status.
+     */
+    @PostMapping
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> add(@Valid @RequestBody Document newDocument) {
-        if (newDocument.getId() != null) {
-            Optional<Document> documentOptional = this.documentDao.findById(newDocument.getId());
-
-            // l'utilisateur tente de modifier un document qui n'existe pas ou plus
-            if (documentOptional.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-
-            this.documentDao.save(newDocument);
-
-            return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
-        }
-
-        documentDao.save(newDocument);
-
-        return new ResponseEntity<>(newDocument, HttpStatus.CREATED);
+        return documentService.addDocument(newDocument);
     }
 
-    @PutMapping("/document/{id}")
+    /**
+     * Updates an existing document.
+     *
+     * @param document The Document object containing the updated document details.
+     * @param id The ID of the document to update.
+     * @return A ResponseEntity containing the updated Document object, or an appropriate HTTP status.
+     */
+    @PutMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> update(@Valid @RequestBody Document document, @PathVariable int id) {
-        document.setId(id);
-
-        Optional<Document> documentOptional = documentDao.findById(document.getId());
-
-        //l'utilisateur tente de modifier un document qui n'existe pas/plus
-        if (documentOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        this.documentDao.save(document);
-        return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
+        return documentService.updateDocument(document, id);
     }
 
-    @DeleteMapping("/document/{id}")
+    /**
+     * Deletes an existing document by its ID.
+     *
+     * @param id The ID of the document to delete.
+     * @return A ResponseEntity containing the deleted Document object if successful, or an appropriate HTTP status.
+     */
+    @DeleteMapping("/{id}")
     @JsonView(DocumentView.class)
     @AdminPermission
     public ResponseEntity<Document> delete(@PathVariable int id) {
-
-        Optional<Document> documentOptional = this.documentDao.findById(id);
-
-        if (documentOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        this.documentDao.deleteById(id);
-        return new ResponseEntity<>(documentOptional.get(), HttpStatus.OK);
+        return documentService.deleteDocument(id);
     }
 }
