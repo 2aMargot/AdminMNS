@@ -32,6 +32,7 @@ class ConnexionControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
 //    @Test
     void testConnexion() throws Exception {
         ModelUser user = new ModelUser();
