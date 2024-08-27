@@ -52,6 +52,13 @@ public class AbsenceController {
         return absenceService.absenceCauseList();
     }
 
+    @GetMapping("/student/{id}")
+    @JsonView(AbsenceView.class)
+    @StudentPermission
+    public ResponseEntity<Absence[]> listAbsenceByStudent(@PathVariable int id) {
+        return absenceService.getAbsenceByStudent(id);
+    }
+
     /**
      * Retrieves an absence by its ID.
      *
