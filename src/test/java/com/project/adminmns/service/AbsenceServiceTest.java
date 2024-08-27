@@ -117,7 +117,6 @@ class AbsenceServiceTest {
 
     @Test
     void updateAbsence_found() {
-        // Arrange
         Absence existingAbsence = new Absence();
         Student student = new Student();
         existingAbsence.setStudentAbsence(student);
@@ -125,24 +124,20 @@ class AbsenceServiceTest {
         when(absenceDao.findById(anyInt())).thenReturn(Optional.of(existingAbsence));
         when(studentService.getStudentByEmail(anyString())).thenReturn(existingAbsence.getStudentAbsence());
 
-        // Act
         ResponseEntity<Absence> response = absenceService.updateAbsence(existingAbsence, 1);
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(absenceDao, times(1)).save(existingAbsence);
     }
 
     @Test
     void updateAbsence_notFound() {
-        // Arrange
+
         Absence updatedAbsence = new Absence();
         when(absenceDao.findById(anyInt())).thenReturn(Optional.empty());
 
-        // Act
         ResponseEntity<Absence> response = absenceService.updateAbsence(updatedAbsence, 1);
 
-        // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         verify(absenceDao, never()).save(updatedAbsence);
     }

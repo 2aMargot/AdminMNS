@@ -5,6 +5,7 @@ import com.project.adminmns.model.Absence;
 import com.project.adminmns.model.AbsenceCause;
 import com.project.adminmns.security.AdminPermission;
 import com.project.adminmns.security.StudentPermission;
+import com.project.adminmns.security.ValidatorPermission;
 import com.project.adminmns.service.AbsenceService;
 import com.project.adminmns.view.AbsenceView;
 import jakarta.validation.Valid;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RequestMapping("absence")
 @RestController
-@CrossOrigin //à configurer sur une application/API déployée
+@CrossOrigin
 public class AbsenceController {
 
     private final AbsenceService absenceService;
@@ -59,7 +60,7 @@ public class AbsenceController {
      */
     @GetMapping("/{id}")
     @JsonView(AbsenceView.class)
-    @AdminPermission
+    @ValidatorPermission
     public ResponseEntity<Absence> get(@PathVariable int id) {
         return absenceService.getAbsence(id);
     }
